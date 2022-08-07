@@ -13,7 +13,7 @@ public class GoToRegistrationPageCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		request.getSession(true).setAttribute("registered_user", ConnectorStatus.NOT_REGISTERED);
-		request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);	
+		request.getSession(true).setAttribute("register_user", ConnectorStatus.NOT_REGISTERED);
+		request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);		
 	}
 }

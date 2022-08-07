@@ -16,7 +16,7 @@ public class UserDao implements IUserDao{
 	
     @Override
     public User findUserByLoginAndPassword(String login, String password) throws DaoException {
-        String sql = "SELECT login, password, name, surname, email, roles.role as role from users left join roles using (id) where login=? and password=?";
+        String sql = "SELECT login, password, name, surname, email, roles.role as role from users join roles on roles.id = users.role where login=? and password=?";
         User user = new User();
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
             PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -24,10 +24,10 @@ public class UserDao implements IUserDao{
             ps.setString(2, password);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                	user.setUserName(rs.getString("name"));
-                	user.setUserSurname(rs.getString("surname"));
                 	user.setLogin(rs.getString("login"));
                 	user.setPassword(rs.getString("password"));
+                	user.setUserName(rs.getString("name"));
+                	user.setUserSurname(rs.getString("surname"));
                 	user.setEmail(rs.getString("email"));
                 	user.setRole(UserRole.valueOf(rs.getString("role").toUpperCase()));
                     return user;

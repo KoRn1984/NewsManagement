@@ -34,9 +34,9 @@ public class UserServiceImpl implements IUserService{
 		  boolean result = false;
 		  
 		  try {
-			   if(userDataValidation.checkAuthDataRegistration(user)) {
+			   //if(userDataValidation.checkAuthDataRegistration(user)) {
 			       result = userDao.saveUser(user);		       
-			   }
+			   //}
 		   }catch(DaoException e) {
 				throw new ServiceException(e);
 				}

@@ -15,21 +15,13 @@ public class User {
     public User() {
     }
 
-    //TODO builder
-    public User(String userName, String userSurname, String email, String login, UserRole role) {
-    	this.userName = userName;
-        this.userSurname = userSurname;
-        this.email = email;
-        this.login = login;
-        this.role = role;
-    }
-    
-    public User(String userName, String userSurname, String email, String login, String password, UserRole role) {    	
-    	this.userName = userName;
-        this.userSurname = userSurname;
-        this.email = email;
-        this.login = login;
+    //TODO builder      
+    public User(String login, String password, String userName, String userSurname, String email, UserRole role) {    	
+    	this.login = login;
         this.password = password;
+    	this.userName = userName;
+        this.userSurname = userSurname;
+        this.email = email;        
         this.role = role;
     }
 
