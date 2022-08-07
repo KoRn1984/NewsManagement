@@ -5,6 +5,7 @@ import java.util.List;
 
 import by.itacademy.matveenko.jd2.bean.News;
 import by.itacademy.matveenko.jd2.controller.Command;
+import by.itacademy.matveenko.jd2.controller.JspPageName;
 import by.itacademy.matveenko.jd2.service.INewsService;
 import by.itacademy.matveenko.jd2.service.ServiceException;
 import by.itacademy.matveenko.jd2.service.ServiceProvider;
@@ -23,7 +24,7 @@ public class GoToNewsList implements Command {
 			newsList = newsService.list();
 			request.setAttribute("news", newsList);
 			request.setAttribute("presentation", "newsList");			
-			request.getRequestDispatcher("WEB-INF/pages/layouts/baseLayout.jsp").forward(request, response);
+			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 		} catch (ServiceException e) {			
 			e.printStackTrace();
 		}		

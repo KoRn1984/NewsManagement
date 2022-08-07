@@ -28,6 +28,9 @@ public class NewsDao implements INewsDao {
 		result.add(new News(3, "title3", "brief3brief3brief3brief3brief3brief3brief3", "contect3", "11/11/22"));
 		result.add(new News(4, "title4", "brief4brief4brief4brief4brief4brief4brief4", "contect4", "11/11/22"));
 		result.add(new News(5, "title5", "brief5brief5brief5brief5brief5brief5brief5", "contect5", "11/11/22"));
+		result.add(new News(6, "title6", "brief6brief6brief6brief6brief6brief6brief6", "contect6", "11/11/22"));
+		result.add(new News(7, "title7", "brief7brief7brief7brief7brief7brief7brief7", "contect7", "11/11/22"));
+		result.add(new News(8, "title8", "brief8brief8brief8brief8brief8brief8brief8", "contect8", "11/11/22"));
 		return result;
 	}
 

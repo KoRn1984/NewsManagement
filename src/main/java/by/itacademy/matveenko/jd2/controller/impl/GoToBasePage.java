@@ -9,6 +9,7 @@ import by.itacademy.matveenko.jd2.service.INewsService;
 import by.itacademy.matveenko.jd2.service.ServiceException;
 import by.itacademy.matveenko.jd2.service.ServiceProvider;
 import by.itacademy.matveenko.jd2.controller.Command;
+import by.itacademy.matveenko.jd2.controller.JspPageName;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +25,7 @@ public class GoToBasePage implements Command{
 			latestNews = newsService.latestList(5);
 			request.setAttribute("user", ConnectorStatus.NOT_ACTIVE);
 			request.setAttribute("news", latestNews);			
-			request.getRequestDispatcher("WEB-INF/pages/layouts/baseLayout.jsp").forward(request, response);
+			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 		} catch (ServiceException e) {			
 			e.printStackTrace();
 		}		

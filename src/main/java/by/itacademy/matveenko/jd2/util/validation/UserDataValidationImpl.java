@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import by.itacademy.matveenko.jd2.bean.NewUserInfo;
+import by.itacademy.matveenko.jd2.bean.User;
 import by.itacademy.matveenko.jd2.service.ServiceException;
 
 public class UserDataValidationImpl implements UserDataValidation {
@@ -12,7 +12,7 @@ public class UserDataValidationImpl implements UserDataValidation {
 	private final static String SURNAME_PATTERN = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$";
 	private final static String EMAIL_PATTERN = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$";
 	private final static String LOGIN_PATTERN = "^[A-Za-z]([.A-Za-z0-9-]{1,18})([A-Za-z0-9])$";
-	private final static String PASSWORD_PATTERN = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$";
+	private final static String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\\w\\s]).{6,}";
 	private List<String> invalidRegistrationData = new ArrayList<>();
 
 	@Override
@@ -25,7 +25,7 @@ public class UserDataValidationImpl implements UserDataValidation {
 	}
 
 	@Override
-	public boolean checkAuthDataRegistration(NewUserInfo user) throws ServiceException {
+	public boolean checkAuthDataRegistration(User user) throws ServiceException {
 		String userName = user.getUserName();
 		String userSurname = user.getUserSurname();
 		String login = user.getLogin();

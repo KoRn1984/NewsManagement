@@ -4,7 +4,7 @@ import by.itacademy.matveenko.jd2.dao.IUserDao;
 import by.itacademy.matveenko.jd2.service.IUserService;
 import by.itacademy.matveenko.jd2.util.validation.UserDataValidation;
 import by.itacademy.matveenko.jd2.util.validation.ValidationProvider;
-import by.itacademy.matveenko.jd2.bean.NewUserInfo;
+import by.itacademy.matveenko.jd2.bean.User;
 import by.itacademy.matveenko.jd2.bean.UserRole;
 import by.itacademy.matveenko.jd2.dao.DaoException;
 import by.itacademy.matveenko.jd2.dao.DaoProvider;
@@ -16,10 +16,11 @@ public class UserServiceImpl implements IUserService{
 	private final UserDataValidation userDataValidation = ValidationProvider. getInstance().getUserDataValidation();
 	
 	@Override
-	public String signIn(String login, String password) throws ServiceException {
+	public UserRole signIn(String login, String password) throws ServiceException {
 		try {
-			if(userDao.logination(login, password)) {
-				return userDao.getUserRole(login, password);					
+			User user = userDao.findUserByLoginAndPassword(login, password);
+			if(user != null) {
+				return user.getRole();				
 				}else {
 					return UserRole.GUEST;
 				}
@@ -27,15 +28,14 @@ public class UserServiceImpl implements IUserService{
 				throw new ServiceException(e);
 			}
 		}
-	
-	
+		
 	@Override
-	public boolean registration(NewUserInfo user) throws ServiceException  {
+	public boolean registration(User user) throws ServiceException  {
 		  boolean result = false;
 		  
 		  try {
 			   if(userDataValidation.checkAuthDataRegistration(user)) {
-			       result = userDao.registration(user);			       
+			       result = userDao.saveUser(user);		       
 			   }
 		   }catch(DaoException e) {
 				throw new ServiceException(e);
