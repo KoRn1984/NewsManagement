@@ -10,9 +10,9 @@
      <form action="controller" method="post">
 			<input type="hidden" name="command" value="do_registration" />
 			Enter login:<br/>
-			<input type="text" name="login" value="" size=20 maxlength=30 required="required"/><br/>
+			<input type="text" name="login" value="" required pattern="^[A-Za-z]([.A-Za-z0-9-]{1,18})([A-Za-z0-9])$" size=20 maxlength=30 required="required"/><br/>
 			Enter password:<br/>
-			<input type="password" name="password" value="" size=20 maxlength=30 required="required"/><br/>
+			<input type="password" name="password" value="" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}" size=20 maxlength=30 required="required"/><br/>
 			Enter your name:<br/>
 			<input type="text" name="name" value="" size=20 maxlength=30 required="required"/><br/>
 			Enter your surname:<br/>
