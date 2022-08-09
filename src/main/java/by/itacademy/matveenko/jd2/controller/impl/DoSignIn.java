@@ -24,7 +24,10 @@ public class DoSignIn implements Command {
 		login = request.getParameter(RequestParameterName.JSP_LOGIN_PARAM);
 		password = request.getParameter(RequestParameterName.JSP_PASSWORD_PARAM);	
 
-		// small validation
+		if (!dataValidation(login, password)) {
+            response.sendRedirect(JspPageName.INDEX_PAGE);
+            return;
+        }
 		try {
 			UserRole role = service.signIn(login, password);
 			if (!role.equals(UserRole.GUEST)) {
@@ -41,4 +44,11 @@ public class DoSignIn implements Command {
 			response.sendRedirect(JspPageName.INDEX_PAGE);
 		}		
 	}
+	
+	private boolean dataValidation(String login, String password) {
+        if (login == null || password == null) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -28,22 +28,21 @@
 			
 		    <div class="content">
 				<c:if test="${not (sessionScope.user eq 'active')}"> 
-				<c:import url="/WEB-INF/pages/tiles/guestInfo.jsp" />
-				</c:if>	
-				
+				    <c:import url="/WEB-INF/pages/tiles/guestInfo.jsp" />
+				</c:if>				
 				<c:if test="${sessionScope.user eq 'active'}">
 					<c:import url="/WEB-INF/pages/tiles/body.jsp" />
 				</c:if>
 				
                <div class="registration">
 		             <c:if test="${(sessionScope.register_user eq 'not_registered')}">
-				     <c:import url="/WEB-INF/jsp/registration.jsp" />
+				           <c:import url="/WEB-INF/jsp/registration.jsp" />
 				     </c:if><br />
 				     <c:if test="${not (param.RegistrationError eq null)}">					
 						<font color="red">
 						   <c:out value="${param.RegistrationError}" />
 						</font> 
-					</c:if><br />
+					 </c:if><br />
 		      </div>
 		      </div>				
 		</div>

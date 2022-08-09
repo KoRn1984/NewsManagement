@@ -12,15 +12,15 @@ public final class DaoProvider {
 	private DaoProvider() {
 	}	
 	
+	public static DaoProvider getInstance() {
+		return instance;
+	}
+	
 	public IUserDao getUserDao() {
 		return userDao;
 	}
 	
 	public INewsDao getNewsDao() {
 		return newsDao;
-	}
-
-	public static DaoProvider getInstance() {
-		return instance;
 	}
 }

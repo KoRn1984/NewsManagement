@@ -54,7 +54,8 @@ public class UserDao implements IUserDao{
             ps.setInt(6, user.getRole().getRole());
             ps.executeUpdate();
         } catch (SQLException e) {
-            return false;
+            //return false;
+        	throw new DaoException(e);
         } catch (ConnectionPoolException e) {
             throw new DaoException(e);
         }
