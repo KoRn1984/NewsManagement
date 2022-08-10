@@ -16,10 +16,10 @@ public class UserDao implements IUserDao{
 	
     @Override
     public User findUserByLoginAndPassword(String login, String password) throws DaoException {
-        String sql = "SELECT login, password, name, surname, email, roles.role as role from users join roles on roles.id = users.role where login=? and password=?";
+        String selectUserData = "SELECT login, password, name, surname, email, roles.role as role from users join roles on roles.id = users.role where login=? and password=?";
         User user = new User();
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)) {
+            PreparedStatement ps = connection.prepareStatement(selectUserData)) {
             ps.setString(1, login);
             ps.setString(2, password);
             try (ResultSet rs = ps.executeQuery()) {
@@ -43,9 +43,9 @@ public class UserDao implements IUserDao{
 
     @Override
     public boolean saveUser(User user) throws DaoException {
-        String sql = "INSERT INTO users(login, password, name, surname, email, role) values (?,?,?,?,?,?)";
+        String insertRegistrationData = "INSERT INTO users(login, password, name, surname, email, role) values (?,?,?,?,?,?)";
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)) {
+            PreparedStatement ps = connection.prepareStatement(insertRegistrationData)) {
         	ps.setString(1, user.getLogin());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getUserName());
@@ -53,8 +53,7 @@ public class UserDao implements IUserDao{
             ps.setString(5, user.getEmail());
             ps.setInt(6, user.getRole().getRole());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            //return false;
+        } catch (SQLException e) {            
         	throw new DaoException(e);
         } catch (ConnectionPoolException e) {
             throw new DaoException(e);

@@ -18,7 +18,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public UserRole signIn(String login, String password) throws ServiceException {
 		if (!userDataValidation.checkAuthDataLogination(login,password)) {
-   		 throw new ServiceException("Invalid authorization data!");
+			throw new ServiceException("Invalid authorization data!");
    	 }
 		try {
 			User user = userDao.findUserByLoginAndPassword(login, password);			
@@ -34,15 +34,13 @@ public class UserServiceImpl implements IUserService{
 		
 	@Override
 	public boolean registration(User user) throws ServiceException  {
-		  boolean result = false;
-		  
+		  if (!userDataValidation.checkAuthDataRegistration(user)) {
+			  throw new ServiceException("Invalid registration data!");
+	  }
 		  try {
-			   if(userDataValidation.checkAuthDataRegistration(user)) {
-			       result = userDao.saveUser(user);	       
-			   }
+			   return userDao.saveUser(user);			  
 		   }catch(DaoException e) {
 				throw new ServiceException(e);
-				}
-		  return result;
+				}		  
 		  }
 	}
