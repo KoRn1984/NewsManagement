@@ -1,1 +1,1 @@
-News_Management (registration)
+News Management
