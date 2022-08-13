@@ -30,7 +30,7 @@ public class NewsServiceImpl implements INewsService{
 	@Override
 	public List<News> latestList(int count) throws ServiceException {		
 		try {
-			return newsDao.getLatestsList(5);
+			return newsDao.getLatestList(5);
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}

@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.itacademy.matveenko.jd2.bean.News;
-import by.itacademy.matveenko.jd2.bean.UserRole;
 import by.itacademy.matveenko.jd2.dao.INewsDao;
 import by.itacademy.matveenko.jd2.dao.NewsDaoException;
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPool;
@@ -22,19 +21,33 @@ public class NewsDao implements INewsDao {
 	private static final Logger log = LogManager.getRootLogger();
 
 	@Override
-	public List<News> getLatestsList(int count) throws NewsDaoException {
-		List<News> result = new ArrayList<News>();
-		result.add(new News(1, "title1", "brief1brief1brief1brief1brief1brief1brief1", "contect1", "11/11/22"));
-		result.add(new News(2, "title2", "brief2brief2brief2brief2brief2brief2brief2", "contect2", "11/11/22"));
-		result.add(new News(3, "title3", "brief3brief3brief3brief3brief3brief3brief3", "contect3", "11/11/22"));
-		result.add(new News(4, "title4", "brief4brief4brief4brief4brief4brief4brief4", "contect4", "11/11/22"));
-		result.add(new News(5, "title5", "brief5brief5brief5brief5brief5brief5brief5", "contect5", "11/11/22"));
-		return result;
-	}
+	public List<News> getLatestList(int pageSize) throws NewsDaoException {
+		List<News> newsLatestList = new ArrayList<>();
+		int startSize = pageSize;
+		String selectNewsLatestList = "SELECT * from news limit " + startSize;	 
+	        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+	        	PreparedStatement ps = connection.prepareStatement(selectNewsLatestList)) {
+	            try (ResultSet rs = ps.executeQuery()) {
+	                while (rs.next()) {
+	                	int idNews = rs.getInt("id");
+	    				String titleNews = rs.getString("titleNews");
+	    				String briefNews = rs.getString("briefNews");
+	    				String contentNews = rs.getString("contentNews");
+	    				String dateNews = rs.getString("dateNews");	    				
+	    				News latestNews = new News(idNews, titleNews, briefNews, contentNews, dateNews);
+	    				newsLatestList.add(latestNews);
+	    			}	    						
+	        }	        
+	    } catch (SQLException | ConnectionPoolException e) {
+	    	log.error(e);
+	    	e.printStackTrace();
+	    	}
+	        return newsLatestList;
+	 }				
 
 	@Override
 	public List<News> getNewsList(Integer pageNumber, Integer pageSize) throws NewsDaoException {
-		List<News> newsList = new ArrayList<News>();
+		List<News> newsList = new ArrayList<>();
 		int startSize = (pageNumber - 1) * pageSize;
 		String selectNewsList = "SELECT * from news limit " + startSize + "," + pageSize;	 
 	        try (Connection connection = ConnectionPool.getInstance().takeConnection();
@@ -80,7 +93,6 @@ public class NewsDao implements INewsDao {
 			}
 			return news;
 	}
-
 
 	@Override
 	public int addNews(News news) throws NewsDaoException {
