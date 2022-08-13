@@ -84,7 +84,7 @@ public class NewsDao implements INewsDao {
     				String briefNews = rs.getString("briefNews");
     				String contentNews = rs.getString("contentNews");
     				String dateNews = rs.getString("dateNews");
-    				news = new News(id, titleNews, briefNews, contentNews, dateNews);
+    				news = new News(idNews, titleNews, briefNews, contentNews, dateNews);
     				}
                 }
 			} catch (SQLException | ConnectionPoolException e) {
