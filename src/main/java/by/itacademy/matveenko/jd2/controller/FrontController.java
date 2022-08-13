@@ -2,6 +2,9 @@ package by.itacademy.matveenko.jd2.controller;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPool;
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPoolException;
 import jakarta.servlet.ServletException;
@@ -11,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public  static ConnectionPool instance;
+	private static final Logger log = LogManager.getRootLogger();
 	
 	private final CommandProvider provider = new CommandProvider();
        
@@ -20,17 +23,17 @@ public class FrontController extends HttpServlet {
     }
     
     @Override
-	public void init() throws ServletException {
-    	super.init();
-    	try {
-			instance = ConnectionPool.getInstance();
+    public void init() throws ServletException {
+		try {
+			ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {
-					e.printStackTrace();
-		}		
+			log.error(e);
+			e.printStackTrace();
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String commandName = request.getParameter("command");
+		String commandName = request.getParameter(RequestParameterName.COMMAND_NAME);
 
 		Command command = provider.getCommand(commandName);
 		command.execute(request, response);
@@ -42,7 +45,11 @@ public class FrontController extends HttpServlet {
 
 	@Override
 	public void destroy() {
-		instance.dispose();
-		super.destroy();
+		try {
+			ConnectionPool.getInstance().dispose();
+		} catch (ConnectionPoolException e) {
+			log.error(e);
+			e.printStackTrace();
+		}
 	}
 }

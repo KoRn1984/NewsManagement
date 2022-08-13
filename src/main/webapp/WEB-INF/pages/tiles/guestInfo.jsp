@@ -15,10 +15,10 @@
 		<div class="single-news-wrapper">
 			<div class="single-news-header-wrapper">
 				<div class="news-title">
-					<c:out value="${news.title}" />
+					<c:out value="${news.titleNews}" />
 				</div>
 				<div class="news-date">
-					<c:out value="${news.newsDate}" />
+					<c:out value="${news.dateNews}" />
 				</div>
 				<div class="news-content">
 					<c:out value="${news.briefNews}" />
@@ -28,7 +28,9 @@
 	</c:forEach>
 	<div class="no-news">
 		<c:if test="${requestScope.news eq null}">
-        No news.
+		<font color="red">
+        No news for unregistered user!
+        </font>
 	    </c:if>
 	</div>
 </form>

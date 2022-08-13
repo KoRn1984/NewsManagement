@@ -3,6 +3,9 @@ package by.itacademy.matveenko.jd2.controller.impl;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
 import by.itacademy.matveenko.jd2.bean.News;
 import by.itacademy.matveenko.jd2.service.INewsService;
@@ -17,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GoToBasePage implements Command{
 	
 	private final INewsService newsService = ServiceProvider.getInstance().getNewsService();
+	private static final Logger log = LogManager.getRootLogger();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,7 +31,8 @@ public class GoToBasePage implements Command{
 			request.setAttribute("news", latestNews);			
 			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 		} catch (ServiceException e) {			
-			e.printStackTrace();
+			log.error(e);
+        	response.sendRedirect(JspPageName.ERROR_PAGE);
 		}		
 	}
 }

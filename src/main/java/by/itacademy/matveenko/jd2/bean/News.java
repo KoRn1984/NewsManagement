@@ -7,20 +7,20 @@ public class News implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer idNews = 0;
-	private String title = "";
+	private String titleNews = "";
 	private String briefNews = "";
-	private String content = "";
-	private String newsDate = "";
+	private String contentNews = "";
+	private String dateNews = "";
 	
 	public News(){}
 
-	public News(Integer idNews, String title, String briefNews, String content, String newsDate) {
+	public News(Integer idNews, String titleNews, String briefNews, String contentNews, String dateNews) {
 		super();
 		this.idNews = idNews;
-		this.title = title;
+		this.titleNews = titleNews;
 		this.briefNews = briefNews;
-		this.content = content;
-		this.newsDate = newsDate;
+		this.contentNews = contentNews;
+		this.dateNews = dateNews;
 	}
 
 	public Integer getIdNews() {
@@ -31,12 +31,12 @@ public class News implements Serializable {
 		this.idNews = idNews;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getTitleNews() {
+		return titleNews;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitleNews(String titleNews) {
+		this.titleNews = titleNews;
 	}
 
 	public String getBriefNews() {
@@ -47,21 +47,21 @@ public class News implements Serializable {
 		this.briefNews = briefNews;
 	}
 
-	public String getContent() {
-		return content;
+	public String getContentNews() {
+		return contentNews;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setContentNews(String contentNews) {
+		this.contentNews = contentNews;
 		
 	}
 
-	public String getNewsDate() {
-		return newsDate;
+	public String getDateNews() {
+		return dateNews;
 	}
 
-	public void setNewsDate(String newsDate) {
-		this.newsDate = newsDate;
+	public void setDateNews(String dateNews) {
+		this.dateNews = dateNews;
 	}
 	
 	@Override
@@ -69,18 +69,18 @@ public class News implements Serializable {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         News that = (News) obj;
-        return Objects.equals(idNews, that.idNews) && Objects.equals(title, that.title) && Objects.equals(briefNews, that.briefNews) && Objects.equals(content, that.content) 
-        		&& Objects.equals(newsDate, that.newsDate);
+        return Objects.equals(idNews, that.idNews) && Objects.equals(titleNews, that.titleNews) && Objects.equals(briefNews, that.briefNews) && Objects.equals(contentNews, that.contentNews) 
+        		&& Objects.equals(dateNews, that.dateNews);
     }
 	
 	@Override
     public String toString() {
         return "News{" +
                 "idNews='" + idNews + '\'' +
-                ", title='" + title + '\'' +
+                ", titleNews='" + titleNews + '\'' +
                 ", briefNews='" + briefNews + '\'' +
-                ", content='" + content + '\'' +
-                ", newsDate='" + newsDate + '\'' +
+                ", contentNews='" + contentNews + '\'' +
+                ", dateNews='" + dateNews + '\'' +
                 '}';
     }	
 }

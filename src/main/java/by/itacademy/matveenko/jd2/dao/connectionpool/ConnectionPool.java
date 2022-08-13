@@ -7,6 +7,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class ConnectionPool {
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConQueue;
@@ -17,6 +20,7 @@ public class ConnectionPool {
     private int poolSize;
     private static ConnectionPool instance;
     private static volatile boolean stopConnectionsQueue = false;
+    private static final Logger log = LogManager.getRootLogger();
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
@@ -67,7 +71,7 @@ public class ConnectionPool {
             closeConnectionsQueue(givenAwayConQueue);
             closeConnectionsQueue(connectionQueue);
         } catch (SQLException e) {
-        	// logger.log(Level.ERROR, "Error closing the connection.", e);
+        	log.error("Error closing the connection!");
         }
     }
 
@@ -79,7 +83,7 @@ public class ConnectionPool {
             givenAwayConQueue.add(connection);
         	}
         } catch (InterruptedException e) {
-            throw new ConnectionPoolException("Error connecting to data source.", e);
+            throw new ConnectionPoolException("Error connecting to data source!", e);
         }
         return connection;
     }
@@ -88,19 +92,19 @@ public class ConnectionPool {
         try {
             con.close();
         } catch (SQLException e) {
-            // logger.log(Level.ERROR, "Connection isn't return to the pool.");
+        	log.error("Connection isn't return to the pool!");
         }
         
         try {
             rs.close();
         } catch (SQLException e) {
-            // logger.log(Level.ERROR, "ResultSet isn't closed.");
+        	log.error("ResultSet isn't closed!");
         }
         
         try {
             st.close();
         } catch (SQLException e) {
-            // logger.log(Level.ERROR, "Statement isn't closed.");
+        	log.error("Statement isn't closed!");
         }
     }
 
@@ -108,13 +112,13 @@ public class ConnectionPool {
         try {
             con.close();
         } catch (SQLException e) {
-            // logger.log(Level.ERROR, "Connection isn't return to the pool.");
+        	log.error("Connection isn't return to the pool!");
         }
 
         try {
             st.close();
         } catch (SQLException e) {
-            // logger.log(Level.ERROR, "Statement isn't closed.");
+        	log.error("Statement isn't closed!");
         }
     }
 
@@ -148,7 +152,7 @@ public class ConnectionPool {
         @Override
         public void close() throws SQLException {
             if (connection.isClosed()) {
-                throw new SQLException("Attempting to close closed connection.");
+                throw new SQLException("Attempting to close closed connection!");
             }
 
             if (connection.isReadOnly()) {
@@ -156,11 +160,11 @@ public class ConnectionPool {
             }
 
             if (!givenAwayConQueue.remove(this)) {
-                throw new SQLException("Error deleting connection from the given away connections pool.");
+                throw new SQLException("Error deleting connection from the given away connections pool!");
             }
             
             if (!connectionQueue.offer(this)) {
-                throw new SQLException("Error allocating connection in the pool.");
+                throw new SQLException("Error allocating connection in the pool!");
             }
         }
 

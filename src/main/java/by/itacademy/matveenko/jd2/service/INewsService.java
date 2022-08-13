@@ -10,6 +10,6 @@ public interface INewsService {
 	  void update();
 	  
 	  List<News> latestList(int count)  throws ServiceException;
-	  List<News> list()  throws ServiceException;
+	  List<News> newsList(Integer pageNumber, Integer pageSize)  throws ServiceException;
 	  News findById(int id) throws ServiceException;
 	}

@@ -37,9 +37,9 @@ public class NewsServiceImpl implements INewsService{
 	}
 
 	@Override
-	public List<News> list() throws ServiceException {
+	public List<News> newsList(Integer pageNumber, Integer pageSize) throws ServiceException {
 		try {
-			return newsDao.getList();
+			return newsDao.getNewsList(pageNumber, pageSize);
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}

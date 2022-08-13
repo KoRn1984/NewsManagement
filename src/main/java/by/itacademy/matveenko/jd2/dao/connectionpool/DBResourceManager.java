@@ -3,7 +3,7 @@ package by.itacademy.matveenko.jd2.dao.connectionpool;
 import java.util.ResourceBundle;
 import by.itacademy.matveenko.jd2.dao.connectionpool.DBResourceManager;
 
-public class DBResourceManager {
+public final class DBResourceManager {
     
 	private final static DBResourceManager instance = new DBResourceManager();
     
