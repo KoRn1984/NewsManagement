@@ -15,7 +15,9 @@
 		<div class="single-news-wrapper">
 			<div class="single-news-header-wrapper">
 				<div class="news-title">
+				<strong>
 					<c:out value="${news.titleNews}" />
+				</strong>
 				</div>
 				<div class="news-date">
 					<c:out value="${news.dateNews}" />

@@ -6,10 +6,12 @@
 <form action="" method="post">
 	<c:forEach var="news" items="${requestScope.news}">
 		<div class="single-news-wrapper">
-			<div class="single-news-header-wrapper">
+			<div class="single-news-header-wrapper">			
 				<div class="news-title">
+				<strong>				
 					<c:out value="${news.titleNews}" />
-				</div>
+				</strong>			
+				</div>							
 				<div class="news-date">
 					<c:out value="${news.dateNews}" />
 				</div>

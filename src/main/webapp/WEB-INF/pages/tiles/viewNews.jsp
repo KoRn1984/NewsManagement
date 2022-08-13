@@ -10,7 +10,9 @@
 			<td class="space_around_title_text">Title</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
+			<strong>
 				<c:out value="${requestScope.news.titleNews}" />
+			</strong>
 			</div>
 			</td>
 		</tr>
