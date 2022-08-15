@@ -9,11 +9,11 @@
 		<div class="list-menu-wrapper" style="float: right;">
 			<ul style="list-style-image: url(images/img.jpg); text-align: left;">
 				<li style="padding-left: 15px;">				
-				<a href="">News List</a><br />
+				<a href="controller?command=go_to_news_list">News List</a><br />
 				</li>
 				<c:if test="${sessionScope.role eq 'admin'}">
 				<li style="padding-left: 15px;">				
-				<a href="">Add News</a><br />					
+				<a href="controller?command=go_to_add_news_page">Add News</a><br />					
 				</li>
 				</c:if>
 			</ul>

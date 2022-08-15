@@ -9,6 +9,6 @@ public interface INewsDao {
 	List<News> getNewsList(Integer pageNumber, Integer pageSize) throws NewsDaoException;
 	News fetchById(Integer id) throws NewsDaoException;
 	int addNews(News news) throws NewsDaoException;
-	void updateNews(News news) throws NewsDaoException;
+	int updateNews(News news) throws NewsDaoException;
 	void deleteNewses(String[] idNewses)throws NewsDaoException;	
 }

@@ -99,8 +99,8 @@ public class NewsDao implements INewsDao {
 
 	@Override
 	public int addNews(News news) throws NewsDaoException {
-		/*int row = 0;
-		String insertNews = "INSERT into news(titleNews, briefNews, contentNews, dateNews) values (?,?,?,?,?)";
+		int row = 0;
+		/*String insertNews = "INSERT into news(titleNews, briefNews, contentNews, dateNews) values (?,?,?,?,?)";
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 		    PreparedStatement ps = connection.prepareStatement(insertNews)) {
 			ps.setString(1, news.getTitleNews());
@@ -113,16 +113,18 @@ public class NewsDao implements INewsDao {
 					log.error(e);
 					throw new NewsDaoException(e);
 				}
-				*/return 0;
+				*/return row;
 		}
 	
 	@Override
-	public void updateNews(News news) throws NewsDaoException {
+	public int updateNews(News news) throws NewsDaoException {
+		int row = 0;
 		// TODO Auto-generated method stub
+		return row;
 	}
 
 	@Override
 	public void deleteNewses(String[] idNewses) throws NewsDaoException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 	}
 }
