@@ -33,14 +33,15 @@ public class NewsDao implements INewsDao {
 	    				String titleNews = rs.getString("titleNews");
 	    				String briefNews = rs.getString("briefNews");
 	    				String contentNews = rs.getString("contentNews");
-	    				String dateNews = rs.getString("dateNews");	    				
+	    				String dateNews = rs.getString("dateNews");
+	    				//int idReporter = rs.getInt("idReporter");
 	    				News latestNews = new News(idNews, titleNews, briefNews, contentNews, dateNews);
 	    				newsLatestList.add(latestNews);
 	    			}	    						
 	        }	        
 	    } catch (SQLException | ConnectionPoolException e) {
 	    	log.error(e);
-	    	e.printStackTrace();
+	    	throw new NewsDaoException(e);
 	    	}
 	        return newsLatestList;
 	 }				
@@ -58,14 +59,15 @@ public class NewsDao implements INewsDao {
 	    				String titleNews = rs.getString("titleNews");
 	    				String briefNews = rs.getString("briefNews");
 	    				String contentNews = rs.getString("contentNews");
-	    				String dateNews = rs.getString("dateNews");	    				
+	    				String dateNews = rs.getString("dateNews");
+	    				//int idReporter = rs.getInt("idReporter");
 	    				News news = new News(idNews, titleNews, briefNews, contentNews, dateNews);
 	    				newsList.add(news);
 	    			}	    						
 	        }	        
 	    } catch (SQLException | ConnectionPoolException e) {
 	    	log.error(e);
-	    	e.printStackTrace();
+	    	throw new NewsDaoException(e);
 	    	}
 	        return newsList;
 	 }				
@@ -84,22 +86,36 @@ public class NewsDao implements INewsDao {
     				String briefNews = rs.getString("briefNews");
     				String contentNews = rs.getString("contentNews");
     				String dateNews = rs.getString("dateNews");
+    				//int idReporter = rs.getInt("idReporter");
     				news = new News(idNews, titleNews, briefNews, contentNews, dateNews);
     				}
                 }
 			} catch (SQLException | ConnectionPoolException e) {
 				log.error(e);
-				e.printStackTrace();
+				throw new NewsDaoException(e);
 			}
 			return news;
 	}
 
 	@Override
 	public int addNews(News news) throws NewsDaoException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+		/*int row = 0;
+		String insertNews = "INSERT into news(titleNews, briefNews, contentNews, dateNews) values (?,?,?,?,?)";
+		try (Connection connection = ConnectionPool.getInstance().takeConnection();
+		    PreparedStatement ps = connection.prepareStatement(insertNews)) {
+			ps.setString(1, news.getTitleNews());
+            ps.setString(2, news.getBriefNews());
+            ps.setString(3, news.getContentNews());
+            ps.setString(4, news.getDateNews());
+            ps.setInt(6, user.getIdReporter());
+            row = ps.executeUpdate();
+				} catch (SQLException | ConnectionPoolException e) {
+					log.error(e);
+					throw new NewsDaoException(e);
+				}
+				*/return 0;
+		}
+	
 	@Override
 	public void updateNews(News news) throws NewsDaoException {
 		// TODO Auto-generated method stub

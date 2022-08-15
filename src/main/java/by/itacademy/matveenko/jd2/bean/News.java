@@ -11,6 +11,7 @@ public class News implements Serializable {
 	private String briefNews = "";
 	private String contentNews = "";
 	private String dateNews = "";
+	//private Integer idReporter = 0;
 	
 	public News(){}
 
@@ -21,6 +22,7 @@ public class News implements Serializable {
 		this.briefNews = briefNews;
 		this.contentNews = contentNews;
 		this.dateNews = dateNews;
+		//this.idReporter = idReporter;
 	}
 
 	public Integer getIdNews() {
@@ -64,6 +66,14 @@ public class News implements Serializable {
 		this.dateNews = dateNews;
 	}
 	
+	//public Integer getIdReporter() {
+	//	return idReporter;
+	//}
+
+	//public void setIdReporter(Integer idReporter) {
+	//	this.idReporter = idReporter;
+	//}
+	
 	@Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -80,7 +90,7 @@ public class News implements Serializable {
                 ", titleNews='" + titleNews + '\'' +
                 ", briefNews='" + briefNews + '\'' +
                 ", contentNews='" + contentNews + '\'' +
-                ", dateNews='" + dateNews + '\'' +
+                ", dateNews='" + dateNews + '\'' +                
                 '}';
     }	
 }
