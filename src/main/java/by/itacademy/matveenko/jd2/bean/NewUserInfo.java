@@ -11,13 +11,13 @@ public class NewUserInfo {
     private String email;
     private String login;
     private String password;
-    private String role;
+    private UserRole role;
 
     public NewUserInfo() {
     }
 
     //TODO builder
-    public NewUserInfo(String userName, String userSurname, String email, String login, String role) {
+    public NewUserInfo(String userName, String userSurname, String email, String login, UserRole role) {
     	this.userName = userName;
         this.userSurname = userSurname;
         this.email = email;
@@ -25,7 +25,7 @@ public class NewUserInfo {
         this.role = role;
     }
     
-    public NewUserInfo(String userName, String userSurname, String email, String login, String password, String role) {    	
+    public NewUserInfo(String userName, String userSurname, String email, String login, String password, UserRole role) {
     	this.userName = userName;
         this.userSurname = userSurname;
         this.email = email;
@@ -82,11 +82,11 @@ public class NewUserInfo {
         this.password = password;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
     

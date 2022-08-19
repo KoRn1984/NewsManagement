@@ -12,8 +12,8 @@
 			<div align="right">
 				<form action="controller" method="post">
 					<input type="hidden" name="command" value="do_sign_in" />
-					Enter login:<input type="text" name="login" value="" required pattern="^[A-Za-z]([.A-Za-z0-9-]{1,18})([A-Za-z0-9])$"/><br />
-					Enter password:<input type="password" name="password" value="" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}"/><br />
+					Enter login:<input type="text" name="login" value="" /><br />
+					Enter password:<input type="password" name="password" value="" /><br />
 					<c:if test="${not (param.AuthenticationError eq null)}">					
 						<font color="red">
 						   <c:out value="${param.AuthenticationError}" />

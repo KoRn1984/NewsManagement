@@ -28,8 +28,8 @@ public class UserDataValidationImpl implements UserDataValidation {
 	public boolean checkAuthDataRegistration(User user) throws ServiceException {
 		String login = user.getLogin();
 		String password = user.getPassword();
-		String userName = user.getUserName();
-		String userSurname = user.getUserSurname();		
+		String userName = user.getName();
+		String userSurname = user.getSurname();
 		String email = user.getEmail();
 			
 		if (password.isEmpty() || login.isEmpty() || userName.isEmpty() || userSurname.isEmpty() || email.isEmpty()) {

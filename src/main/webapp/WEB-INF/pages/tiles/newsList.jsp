@@ -9,23 +9,23 @@
 			<div class="single-news-header-wrapper">			
 				<div class="news-title">
 				<strong>				
-					<c:out value="${news.titleNews}" />
+					<c:out value="${news.title}" />
 				</strong>			
 				</div>							
 				<div class="news-date">
-					<c:out value="${news.dateNews}" />
+					<c:out value="${news.date}" />
 				</div>
 				<div class="news-content">
-					<c:out value="${news.briefNews}" />
+					<c:out value="${news.brief}" />
 				</div>
 				<div class="news-link-to-wrapper">
 					<div class="link-position">
 						<c:if test="${sessionScope.role eq 'admin'}">
 						      <a href="">Edit</a> 
 						</c:if>						
-						<a href="controller?command=go_to_view_news&id=${news.idNews}">View</a>   					    
+						<a href="controller?command=go_to_view_news&id=${news.id}">View</a>
    					    <c:if test="${sessionScope.role eq 'admin'}">
-   					         <input type="checkbox" name="idNews" value="${news.idNews}" />
+   					         <input type="checkbox" name="idNews" value="${news.id}" />
    					    </c:if>
 					</div>
 				</div>

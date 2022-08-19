@@ -16,14 +16,14 @@
 			<div class="single-news-header-wrapper">
 				<div class="news-title">
 				<strong>
-					<c:out value="${news.titleNews}" />
+					<c:out value="${news.title}" />
 				</strong>
 				</div>
 				<div class="news-date">
-					<c:out value="${news.dateNews}" />
+					<c:out value="${news.date}" />
 				</div>
 				<div class="news-content">
-					<c:out value="${news.briefNews}" />
+					<c:out value="${news.brief}" />
 				</div>
 			</div>
 		</div>

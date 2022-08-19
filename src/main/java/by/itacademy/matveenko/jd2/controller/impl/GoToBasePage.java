@@ -17,22 +17,22 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class GoToBasePage implements Command{
-	
-	private final INewsService newsService = ServiceProvider.getInstance().getNewsService();
-	private static final Logger log = LogManager.getRootLogger();
+public class GoToBasePage implements Command {
 
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<News> latestNews;
-		try {
-			latestNews = newsService.latestList(5);
-			request.setAttribute("user", ConnectorStatus.NOT_ACTIVE);
-			request.setAttribute("news", latestNews);			
-			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
-		} catch (ServiceException e) {			
-			log.error(e);
-        	response.sendRedirect(JspPageName.ERROR_PAGE);
-		}		
-	}
+    private final INewsService newsService = ServiceProvider.getInstance().getNewsService();
+    private static final Logger log = LogManager.getRootLogger();
+
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<News> latestNews;
+        try {
+            latestNews = newsService.latestList(5);
+            request.setAttribute("news", latestNews);
+        } catch (ServiceException e) {
+            log.error(e);
+        } finally {
+            request.setAttribute("user", ConnectorStatus.NOT_ACTIVE);
+            request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
+        }
+    }
 }

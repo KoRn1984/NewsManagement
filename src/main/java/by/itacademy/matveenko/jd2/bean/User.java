@@ -2,11 +2,10 @@ package by.itacademy.matveenko.jd2.bean;
 
 import com.google.common.base.Objects;
 
-import by.itacademy.matveenko.jd2.bean.User;
-
-public class User {	
-	private String userName;
-    private String userSurname;
+public class User {
+    private Integer id;
+	private String name;
+    private String surname;
     private String email;
     private String login;
     private String password;
@@ -15,30 +14,84 @@ public class User {
     public User() {
     }
 
-    //TODO builder      
+    //TODO builder
+
+
     public User(String login, String password, String userName, String userSurname, String email, UserRole role) {    	
     	this.login = login;
         this.password = password;
-    	this.userName = userName;
-        this.userSurname = userSurname;
+    	this.name = userName;
+        this.surname = userSurname;
         this.email = email;        
         this.role = role;
     }
 
-    public String getUserName() {
-        return userName;
+    public static class Builder{
+        private User newUser;
+
+        public Builder(){
+            this.newUser = new User();
+        }
+
+        public Builder withLogin(String login){
+            newUser.setLogin(login);
+            return this;
+        }
+        public Builder withPassword(String password){
+            newUser.setPassword(password);
+            return this;
+        }
+        public Builder withName(String name){
+            newUser.setName(name);
+            return this;
+        }
+        public Builder withSurname(String surname){
+            newUser.setSurname(surname);
+            return this;
+        }
+
+        public Builder withEmail(String email){
+            newUser.setEmail(email);
+            return this;
+        }
+
+        public Builder withRole(UserRole role){
+            newUser.setRole(role);
+            return this;
+        }
+
+        public Builder withId(Integer id){
+            newUser.setId(id);
+            return this;
+        }
+
+        public User build(){
+            return newUser;
+        }
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
-    public String getUserSurname() {
-        return userSurname;
+    public Integer getId(){
+        return this.id;
+    }
+    public String getName() {
+        return name;
     }
 
-    public void setUserSurname(String userSurname) {
-        this.userSurname = userSurname;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
     
     public String getEmail() {
@@ -72,26 +125,28 @@ public class User {
     public void setRole(UserRole role) {
         this.role = role;
     }
+
+
     
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         User that = (User) obj;
-        return Objects.equal(userName, that.userName) && Objects.equal(userSurname, that.userSurname) && Objects.equal(email, that.email)
+        return Objects.equal(name, that.name) && Objects.equal(surname, that.surname) && Objects.equal(email, that.email)
         	   && Objects.equal(login, that.login) && Objects.equal(password, that.password) && Objects.equal(role, that.role);
     }
     
     @Override
 	public int hashCode() {
-		return Objects.hashCode(userName, userSurname, email, login, password, role);
+		return Objects.hashCode(name, surname, email, login, password, role);
 	}
 
 	@Override
     public String toString() {
         return "NewUserInfo{" +
-                "userName='" + userName + '\'' +
-                ", userSurname='" + userSurname + '\'' +
+                "userName='" + name + '\'' +
+                ", userSurname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", password=" + password +

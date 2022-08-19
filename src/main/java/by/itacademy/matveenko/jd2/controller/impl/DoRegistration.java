@@ -2,6 +2,8 @@ package by.itacademy.matveenko.jd2.controller.impl;
 
 import java.io.IOException;
 
+import by.itacademy.matveenko.jd2.dao.DaoException;
+import by.itacademy.matveenko.jd2.dao.impl.UserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class DoRegistration implements Command {
 	
 	private final IUserService service = ServiceProvider.getInstance().getUserService();
+	private final UserDao dao = new UserDao();
 	private static final Logger log = LogManager.getRootLogger();
 		
 		@Override
@@ -34,7 +37,7 @@ public class DoRegistration implements Command {
 		    
 			User user = new User (login, password, userName, userSurname, email,  role);
 		    try {		   
-				if (service.registration(user)) {
+				if (dao.saveUser(user)) {
 					request.getSession(true).setAttribute("user", ConnectorStatus.ACTIVE);
 					request.getSession(true).setAttribute("register_user", ConnectorStatus.REGISTERED);
 					request.getSession(true).setAttribute("role", role.getName());
@@ -46,7 +49,7 @@ public class DoRegistration implements Command {
 					//request.getRequestDispatcher("/WEB-INF/pages/layouts/baseLayout.jsp").forward(request, response);
 					response.sendRedirect("controller?command=go_to_base_page&RegistrationError=Incorrect data entered!");
 					}				
-			}catch (ServiceException e) {
+			}catch (DaoException e) {
 				log.error(e);
 				response.sendRedirect(JspPageName.INDEX_PAGE);
 		    }		
