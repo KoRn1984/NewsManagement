@@ -8,7 +8,7 @@
 			<a href="">Russian</a><br /><br />
 		</div>
 		
-		<c:if test="${not (sessionScope.user eq 'active')}">
+		<c:if test="${not (sessionScope.user_status eq 'active')}">
 			<div align="right">
 				<form action="controller" method="post">
 					<input type="hidden" name="command" value="do_sign_in" />
@@ -26,8 +26,9 @@
 			</div>
 		</c:if>
 			
-		<c:if test="${sessionScope.user eq 'active'}">
+		<c:if test="${sessionScope.user_status eq 'active'}">
 			<div align="right">
+			<center><font color="blue">${user.userName}</font>&nbsp;&nbsp;<font color="blue">${user.userSurname}</font></center>
 				<form action="controller" method="post">
 					<input type="hidden" name="command" value="do_sign_out" />
 					<input type="submit" value="Sign Out" /><br />

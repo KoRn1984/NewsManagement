@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.itacademy.matveenko.jd2.bean.News;
+import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
 import by.itacademy.matveenko.jd2.controller.JspPageName;
 import by.itacademy.matveenko.jd2.service.INewsService;
@@ -20,6 +21,7 @@ public class GoToNewsList implements Command {
 	
 	private final INewsService newsService = ServiceProvider.getInstance().getNewsService();
 	private static final Logger log = LogManager.getRootLogger();
+	private static final String NEWS_LIST = "newsList";
 		
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,9 +30,11 @@ public class GoToNewsList implements Command {
 		Integer pageSize = 5;
 		try {
 			newsList = newsService.newsList(pageNumber, pageSize);
-			request.setAttribute("news", newsList);
-			request.setAttribute("presentation", "newsList");			
+			request.setAttribute(AttributsName.NEWS, newsList);
+			request.setAttribute(AttributsName.PRESENTATION, NEWS_LIST);
 			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
+			//response.sendRedirect(JspPageName.BASELAYOUT_PAGE);
+			//request.setAttribute(AttributsName.REGISTER_USER, null);
 		} catch (ServiceException e) {
 			log.error(e);
 			response.sendRedirect(JspPageName.ERROR_PAGE);

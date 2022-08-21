@@ -31,33 +31,44 @@ public class NewsServiceImpl implements INewsService{
 	}
 
 	@Override
-	public News findById(int id) throws ServiceException {
+	public News findById(Integer idNews) throws ServiceException {
 		try {
-			return newsDao.fetchById(id);
+			return newsDao.fetchById(idNews);
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}
 	}
 	
 	@Override
-	public int save(News news) throws ServiceException {
+	public boolean save(News news) throws ServiceException {
 		try {
-			return newsDao.addNews(news);
+			if (newsDao.addNews(news) == 0) {
+				return false;
+			}
+			return true;
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}
 	}
 
 	@Override
-	public int update(News news) throws ServiceException {
+	public boolean update(News news) throws ServiceException {
 		try {
-			return newsDao.updateNews(news);
+			if (!(newsDao.updateNews(news))) {
+				return false;
+			}
+			return true;
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}
 	}
 	
 	@Override
-	public void find(String[] idNewses) throws ServiceException {		
+	public void find(String[] idNewses) throws ServiceException {
+		try {
+			newsDao.deleteNewses(idNewses);
+		} catch (NewsDaoException e) {
+			throw new ServiceException(e);
+		}
 	}
 }

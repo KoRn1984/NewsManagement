@@ -1,96 +1,141 @@
 package by.itacademy.matveenko.jd2.bean;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class News implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Integer idNews = 0;
-	private String titleNews = "";
-	private String briefNews = "";
-	private String contentNews = "";
-	private String dateNews = "";
-	//private Integer idReporter = 0;
+	private Integer id;
+	private String title;
+	private String brief;
+	private String content;
+	private LocalDate date;
+	private User author;
 	
-	public News(){}
-
-	public News(Integer idNews, String titleNews, String briefNews, String contentNews, String dateNews) {
-		super();
-		this.idNews = idNews;
-		this.titleNews = titleNews;
-		this.briefNews = briefNews;
-		this.contentNews = contentNews;
-		this.dateNews = dateNews;
-		//this.idReporter = idReporter;
+	public News() {
 	}
 
-	public Integer getIdNews() {
-		return idNews;
+	public static class Builder {
+		private News newNews;
+
+		public Builder() {
+			this.newNews = new News();
+		}
+
+		public Builder withId(Integer id) {
+			newNews.setId(id);
+			return this;
+		}
+
+		public Builder withTitle(String title) {
+			newNews.setTitle(title);
+			return this;
+		}
+
+		public Builder withBrief(String brief) {
+			newNews.setBrief(brief);
+			return this;
+		}
+
+		public Builder withContent(String content) {
+			newNews.setContent(content);
+			return this;
+		}
+
+		public Builder withDate(LocalDate date) {
+			newNews.setDate(date);
+			return this;
+		}
+
+		public Builder withAuthor(User author) {
+			newNews.setAuthor(author);
+			return this;
+		}
+
+		public News build() {
+			return newNews;
+		}
 	}
 
-	public void setIdNews(Integer idNews) {
-		this.idNews = idNews;
+	public Integer getId() {
+		return id;
 	}
 
-	public String getTitleNews() {
-		return titleNews;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setTitleNews(String titleNews) {
-		this.titleNews = titleNews;
+	public String getTitle() {
+		return title;
 	}
 
-	public String getBriefNews() {
-		return briefNews;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public void setBriefNews(String briefNews) {
-		this.briefNews = briefNews;
+	public String getBrief() {
+		return brief;
 	}
 
-	public String getContentNews() {
-		return contentNews;
+	public void setBrief(String brief) {
+		this.brief = brief;
 	}
 
-	public void setContentNews(String contentNews) {
-		this.contentNews = contentNews;
-		
+	public String getContent() {
+		return content;
 	}
 
-	public String getDateNews() {
-		return dateNews;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public void setDateNews(String dateNews) {
-		this.dateNews = dateNews;
+	public LocalDate getDate() {
+		return date;
 	}
-	
-	//public Integer getIdReporter() {
-	//	return idReporter;
-	//}
 
-	//public void setIdReporter(Integer idReporter) {
-	//	this.idReporter = idReporter;
-	//}
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public User getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 	
 	@Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         News that = (News) obj;
-        return Objects.equals(idNews, that.idNews) && Objects.equals(titleNews, that.titleNews) && Objects.equals(briefNews, that.briefNews) && Objects.equals(contentNews, that.contentNews) 
-        		&& Objects.equals(dateNews, that.dateNews);
+        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(brief, that.brief) && Objects.equals(content, that.content) 
+        		&& Objects.equals(date, that.date) && Objects.equals(author, that.author);
     }
 	
 	@Override
+	public int hashCode() {
+    	int result = (int) (id ^ (id >>> 32));
+    	result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (brief != null ? brief.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);		
+		result = 31 * result + (author == null ? 0 : author.hashCode());
+		return result;
+	}
+
+	@Override
     public String toString() {
         return "News{" +
-                "idNews='" + idNews + '\'' +
-                ", titleNews='" + titleNews + '\'' +
-                ", briefNews='" + briefNews + '\'' +
-                ", contentNews='" + contentNews + '\'' +
-                ", dateNews='" + dateNews + '\'' +                
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", brief='" + brief + '\'' +
+                ", content='" + content + '\'' +
+                ", date='" + date + '\'' +
+                ", author='" + author.toString() + '\'' +
                 '}';
     }	
 }

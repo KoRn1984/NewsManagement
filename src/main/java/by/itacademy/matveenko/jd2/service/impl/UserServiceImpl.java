@@ -16,16 +16,16 @@ public class UserServiceImpl implements IUserService{
 	private final UserDataValidation userDataValidation = ValidationProvider. getInstance().getUserDataValidation();
 	
 	@Override
-	public UserRole signIn(String login, String password) throws ServiceException {
+	public User signIn(String login, String password) throws ServiceException {
 		if (!userDataValidation.checkAuthDataLogination(login,password)) {
 			throw new ServiceException("Invalid authorization data!");
    	 }
 		try {
 			User user = userDao.findUserByLoginAndPassword(login, password);			
 			if(user != null) {
-				return user.getRole();				
-				}else {
-					return UserRole.GUEST;
+				return user;				
+				} else {
+					return null;
 				}
 			}catch(DaoException e) {
 				throw new ServiceException(e);

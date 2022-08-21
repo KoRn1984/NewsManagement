@@ -12,25 +12,26 @@ import by.itacademy.matveenko.jd2.dao.IUserDao;
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPool;
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPoolException;
 
-public class UserDao implements IUserDao{
+public class UserDao implements IUserDao {
 	
     @Override
     public User findUserByLoginAndPassword(String login, String password) throws DaoException {
-        String selectUserData = "SELECT login, password, name, surname, email, roles.role as role from users join roles on roles.id = users.role where login=? and password=?";
-        User user = new User();
+        String selectUserData = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE login=? and password=?";        
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
             PreparedStatement ps = connection.prepareStatement(selectUserData)) {
             ps.setString(1, login);
             ps.setString(2, password);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                	user.setLogin(rs.getString("login"));
-                	user.setPassword(rs.getString("password"));
-                	user.setUserName(rs.getString("name"));
-                	user.setUserSurname(rs.getString("surname"));
-                	user.setEmail(rs.getString("email"));
-                	user.setRole(UserRole.valueOf(rs.getString("role").toUpperCase()));
-                    return user;
+                	return new User.Builder()
+                			.withId(rs.getInt("id"))
+                			.withLogin(rs.getString("login"))
+                            .withPassword(rs.getString("password"))
+                            .withUserName(rs.getString("name"))
+                            .withUserSurname(rs.getString("surname"))
+                            .withEmail(rs.getString("email"))
+                            .withRole(UserRole.valueOf(rs.getString("role").toUpperCase()))
+                            .build();                	
                 }
             }
         } catch (SQLException e) {
@@ -43,7 +44,7 @@ public class UserDao implements IUserDao{
 
     @Override
     public boolean saveUser(User user) throws DaoException {
-        String insertRegistrationData = "INSERT INTO users(login, password, name, surname, email, role) values (?,?,?,?,?,?)";
+        String insertRegistrationData = "INSERT INTO users(login, password, name, surname, email, role) VALUES (?,?,?,?,?,?)";
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
             PreparedStatement ps = connection.prepareStatement(insertRegistrationData)) {
         	ps.setString(1, user.getLogin());
@@ -60,4 +61,31 @@ public class UserDao implements IUserDao{
         }
         return true;
     }
+    
+    @Override
+    public User findById(Integer id) throws SQLException, DaoException {
+    	String selectDataFindById = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE users.id=?";
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement ps = connection.prepareStatement(selectDataFindById)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new User.Builder()
+                            .withId(rs.getInt("id"))
+                            .withLogin(rs.getString("login"))
+                            .withPassword(rs.getString("password"))
+                            .withUserName(rs.getString("name"))
+                            .withUserSurname(rs.getString("surname"))
+                            .withEmail(rs.getString("email"))
+                            .withRole(UserRole.valueOf(rs.getString("role").toUpperCase()))
+                            .build();
+                }
+            } catch (SQLException e) {
+            	throw new DaoException(e);
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DaoException();
+        }
+        return null;
+    }    
 }

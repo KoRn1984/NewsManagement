@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.itacademy.matveenko.jd2.controller.impl.DoAddNews;
+import by.itacademy.matveenko.jd2.controller.impl.DoEditNews;
 import by.itacademy.matveenko.jd2.controller.impl.DoRegistration;
 import by.itacademy.matveenko.jd2.controller.impl.DoSignIn;
 import by.itacademy.matveenko.jd2.controller.impl.DoSignOut;
 import by.itacademy.matveenko.jd2.controller.impl.GoToAddNewsPage;
 import by.itacademy.matveenko.jd2.controller.impl.GoToBasePage;
+import by.itacademy.matveenko.jd2.controller.impl.GoToEditNewsPage;
 import by.itacademy.matveenko.jd2.controller.impl.GoToNewsList;
 import by.itacademy.matveenko.jd2.controller.impl.GoToViewNews;
 import by.itacademy.matveenko.jd2.controller.impl.GoToRegistrationPageCommand;
@@ -26,6 +28,10 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_VIEW_NEWS, new GoToViewNews());
 		commands.put(CommandName.GO_TO_ADD_NEWS_PAGE, new GoToAddNewsPage());
         commands.put(CommandName.DO_ADD_NEWS, new DoAddNews());
+        commands.put(CommandName.GO_TO_EDIT_NEWS_PAGE, new GoToEditNewsPage());
+        commands.put(CommandName.DO_EDIT_NEWS, new DoEditNews());
+      //commands.put(CommandName.GO_TO_DELETE_NEWS_PAGE, new GoToDeleteNewsPage());
+      //commands.put(CommandName.DO_DELETE_NEWS, new DoDeleteNews());               
 	}
 		
 	public Command getCommand(String name) {

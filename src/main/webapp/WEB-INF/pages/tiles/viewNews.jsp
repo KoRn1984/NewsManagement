@@ -11,7 +11,7 @@
 			<td class="space_around_view_text">
 			<div class="word-breaker">
 			<strong>
-				<c:out value="${requestScope.news.titleNews}" />
+				<c:out value="${requestScope.news.title}" />
 			</strong>
 			</div>
 			</td>
@@ -20,7 +20,7 @@
 			<td class="space_around_title_text">Date</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-				<c:out value="${requestScope.news.dateNews}" />
+				<c:out value="${requestScope.news.date}" />
 			</div>
 			</td>
 		</tr>
@@ -28,7 +28,7 @@
 			<td class="space_around_title_text">Brief</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-				<c:out value="${requestScope.news.briefNews}" />
+				<c:out value="${requestScope.news.brief}" />
 			</div>
 			</td>
 		</tr>
@@ -36,7 +36,7 @@
 			<td class="space_around_title_text">Content</td>
 			<td class="space_around_view_text">
 			<div class="word-breaker">
-				<c:out value="${requestScope.news.contentNews}" />
+				<c:out value="${requestScope.news.content}" />
 			</div>
 			</td>
 		</tr>
@@ -47,7 +47,7 @@
 <div class="first-view-button">
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="edit" />
-		<input type="hidden" name="id" value="${news.idNews}" />
+		<input type="hidden" name="id" value="${news.id}" />
 		<input type="submit" value="Edit" />
 	</form>
 </div>
@@ -55,7 +55,7 @@
 <div class="second-view-button">
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="delete" />
-		<input type="hidden" name="id" value="${news.idNews}" />
+		<input type="hidden" name="id" value="${news.id}" />
 		<input type="submit" value="Delete" />
 	</form>
 </div>

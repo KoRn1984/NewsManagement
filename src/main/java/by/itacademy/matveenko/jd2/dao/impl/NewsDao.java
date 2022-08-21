@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,35 +13,38 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.itacademy.matveenko.jd2.bean.News;
+import by.itacademy.matveenko.jd2.bean.UserRole;
+import by.itacademy.matveenko.jd2.dao.DaoException;
 import by.itacademy.matveenko.jd2.dao.INewsDao;
 import by.itacademy.matveenko.jd2.dao.NewsDaoException;
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPool;
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPoolException;
 
 public class NewsDao implements INewsDao {
-	
+	private final UserDao userDao = new UserDao();
 	private static final Logger log = LogManager.getRootLogger();
 
 	@Override
-	public List<News> getLatestList(int pageSize) throws NewsDaoException {
+	public List<News> getLatestList(int pageSize) throws NewsDaoException  {
 		List<News> newsLatestList = new ArrayList<>();
 		int startSize = pageSize;
-		String selectNewsLatestList = "SELECT * from news limit " + startSize;	 
+		String selectNewsLatestList = "SELECT * FROM news ORDER BY date DESC LIMIT " + startSize;	 
 	        try (Connection connection = ConnectionPool.getInstance().takeConnection();
 	        	PreparedStatement ps = connection.prepareStatement(selectNewsLatestList)) {
 	            try (ResultSet rs = ps.executeQuery()) {
-	                while (rs.next()) {
-	                	int idNews = rs.getInt("id");
-	    				String titleNews = rs.getString("titleNews");
-	    				String briefNews = rs.getString("briefNews");
-	    				String contentNews = rs.getString("contentNews");
-	    				String dateNews = rs.getString("dateNews");
-	    				//int idReporter = rs.getInt("idReporter");
-	    				News latestNews = new News(idNews, titleNews, briefNews, contentNews, dateNews);
+	                while (rs.next()) {	                	
+	    				News latestNews = new News.Builder()
+	    						.withId(rs.getInt("id"))
+	                            .withTitle(rs.getString("title"))
+	                            .withBrief(rs.getString("brief"))
+	                            .withContent(rs.getString("content"))
+	                            .withDate(LocalDate.parse(rs.getString("date")))
+	                            .withAuthor(userDao.findById(rs.getInt("reporter")))
+	                            .build();
 	    				newsLatestList.add(latestNews);
 	    			}	    						
 	        }	        
-	    } catch (SQLException | ConnectionPoolException e) {
+	    } catch (SQLException | ConnectionPoolException | DaoException e) {
 	    	log.error(e);
 	    	throw new NewsDaoException(e);
 	    	}
@@ -50,22 +55,23 @@ public class NewsDao implements INewsDao {
 	public List<News> getNewsList(Integer pageNumber, Integer pageSize) throws NewsDaoException {
 		List<News> newsList = new ArrayList<>();
 		int startSize = (pageNumber - 1) * pageSize;
-		String selectNewsList = "SELECT * from news limit " + startSize + "," + pageSize;	 
+		String selectNewsList = "SELECT * FROM news ORDER BY date DESC LIMIT " + startSize + "," + pageSize;	 
 	        try (Connection connection = ConnectionPool.getInstance().takeConnection();
 	        	PreparedStatement ps = connection.prepareStatement(selectNewsList)) {
 	            try (ResultSet rs = ps.executeQuery()) {
-	                while (rs.next()) {
-	                	int idNews = rs.getInt("id");
-	    				String titleNews = rs.getString("titleNews");
-	    				String briefNews = rs.getString("briefNews");
-	    				String contentNews = rs.getString("contentNews");
-	    				String dateNews = rs.getString("dateNews");
-	    				//int idReporter = rs.getInt("idReporter");
-	    				News news = new News(idNews, titleNews, briefNews, contentNews, dateNews);
+	                while (rs.next()) {	                	
+	    				News news = new News.Builder()
+	    						.withId(rs.getInt("id"))
+	                            .withTitle(rs.getString("title"))
+	                            .withBrief(rs.getString("brief"))
+	                            .withContent(rs.getString("content"))
+	                            .withDate(LocalDate.parse(rs.getString("date")))
+	                            .withAuthor(userDao.findById(rs.getInt("reporter")))
+	                            .build();
 	    				newsList.add(news);
 	    			}	    						
 	        }	        
-	    } catch (SQLException | ConnectionPoolException e) {
+	    } catch (SQLException | ConnectionPoolException | DaoException e) {
 	    	log.error(e);
 	    	throw new NewsDaoException(e);
 	    	}
@@ -73,24 +79,25 @@ public class NewsDao implements INewsDao {
 	 }				
 	
 	@Override
-	public News fetchById(Integer id) throws NewsDaoException {
+	public News fetchById(Integer idNews) throws NewsDaoException {
 		News news = null;
-		String selectNewsById = "SELECT * from news where id = ?";
+		String selectNewsById = "SELECT * FROM news WHERE id = ?";
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 	        PreparedStatement ps = connection.prepareStatement(selectNewsById)) {
-			ps.setInt(1, id);
+			ps.setInt(1, idNews);
 			try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                	int idNews = rs.getInt("id");
-                	String titleNews = rs.getString("titleNews");
-    				String briefNews = rs.getString("briefNews");
-    				String contentNews = rs.getString("contentNews");
-    				String dateNews = rs.getString("dateNews");
-    				//int idReporter = rs.getInt("idReporter");
-    				news = new News(idNews, titleNews, briefNews, contentNews, dateNews);
+                if (rs.next()) {                	
+                	news = new News.Builder()
+    						.withId(rs.getInt("id"))
+                            .withTitle(rs.getString("title"))
+                            .withBrief(rs.getString("brief"))
+                            .withContent(rs.getString("content"))
+                            .withDate(LocalDate.parse(rs.getString("date")))
+                            .withAuthor(userDao.findById(rs.getInt("reporter")))
+                            .build();
     				}
                 }
-			} catch (SQLException | ConnectionPoolException e) {
+			} catch (SQLException | ConnectionPoolException | DaoException e) {
 				log.error(e);
 				throw new NewsDaoException(e);
 			}
@@ -100,31 +107,53 @@ public class NewsDao implements INewsDao {
 	@Override
 	public int addNews(News news) throws NewsDaoException {
 		int row = 0;
-		/*String insertNews = "INSERT into news(titleNews, briefNews, contentNews, dateNews) values (?,?,?,?,?)";
+		String insertNews = "INSERT INTO news(title, brief, content, date, reporter) VALUES (?,?,?,?,?)";
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 		    PreparedStatement ps = connection.prepareStatement(insertNews)) {
-			ps.setString(1, news.getTitleNews());
-            ps.setString(2, news.getBriefNews());
-            ps.setString(3, news.getContentNews());
-            ps.setString(4, news.getDateNews());
-            ps.setInt(6, user.getIdReporter());
+			ps.setString(1, news.getTitle());
+            ps.setString(2, news.getBrief());
+            ps.setString(3, news.getContent());            
+            ps.setString(4, LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            ps.setInt(5, news.getAuthor().getId());          
             row = ps.executeUpdate();
+            if (row == 0) {
+				throw new NewsDaoException("News not saved!");
+			}            
 				} catch (SQLException | ConnectionPoolException e) {
 					log.error(e);
 					throw new NewsDaoException(e);
 				}
-				*/return row;
+				return row;
 		}
 	
 	@Override
-	public int updateNews(News news) throws NewsDaoException {
+	public boolean updateNews(News news) throws NewsDaoException {
 		int row = 0;
-		// TODO Auto-generated method stub
-		return row;
+		String updateNews = "UPDATE newsdb.news SET title = ?, brief = ?, content = ?, date = ?, reporter = ? WHERE id = ?";
+		try (Connection connection = ConnectionPool.getInstance().takeConnection();
+		    PreparedStatement ps = connection.prepareStatement(updateNews)) {
+			ps.setString(1, news.getTitle());
+			ps.setString(2, news.getBrief());
+			ps.setString(3, news.getContent());
+			ps.setString(4, LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            ps.setInt(5, news.getAuthor().getId());
+            ps.setInt(6, news.getId());
+			row = ps.executeUpdate();
+			if (row == 0) {
+				return false;
+					//throw new NewsDaoException("News not saved!");
+				}
+			            return true;
+					} catch (SQLException | ConnectionPoolException e) {
+						log.error(e);
+						throw new NewsDaoException(e);
+					}
+					//return row;
 	}
 
 	@Override
 	public void deleteNewses(String[] idNewses) throws NewsDaoException {
 		// TODO Auto-generated method stub		
 	}
+		
 }

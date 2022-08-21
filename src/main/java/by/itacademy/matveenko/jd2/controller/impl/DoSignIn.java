@@ -7,10 +7,12 @@ import org.apache.logging.log4j.Logger;
 
 import by.itacademy.matveenko.jd2.service.IUserService;
 import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
+import by.itacademy.matveenko.jd2.bean.User;
 import by.itacademy.matveenko.jd2.bean.UserRole;
+import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
 import by.itacademy.matveenko.jd2.controller.JspPageName;
-import by.itacademy.matveenko.jd2.controller.RequestParameterName;
+import by.itacademy.matveenko.jd2.controller.UserParameterName;
 import by.itacademy.matveenko.jd2.service.ServiceException;
 import by.itacademy.matveenko.jd2.service.ServiceProvider;
 import jakarta.servlet.ServletException;
@@ -27,24 +29,25 @@ public class DoSignIn implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login;
 		String password;
-		login = request.getParameter(RequestParameterName.JSP_LOGIN_PARAM);
-		password = request.getParameter(RequestParameterName.JSP_PASSWORD_PARAM);	
+		login = request.getParameter(UserParameterName.JSP_LOGIN_PARAM);
+		password = request.getParameter(UserParameterName.JSP_PASSWORD_PARAM);	
 
 		if (!dataValidation(login, password)) {
             response.sendRedirect(JspPageName.INDEX_PAGE);
             return;
         }
 		try {
-			UserRole role = service.signIn(login, password);
-			if (!role.equals(UserRole.GUEST)) {
-				request.getSession(true).setAttribute("user", ConnectorStatus.ACTIVE);
-				request.getSession(true).setAttribute("role", role.getName());
-				request.getSession(true).setAttribute("registered user", ConnectorStatus.REGISTERED);
-				response.sendRedirect("controller?command=go_to_news_list");
-			} else {
-				request.getSession(true).setAttribute("user", ConnectorStatus.NOT_ACTIVE);
+			User user = service.signIn(login, password);
+			if (user == null) {
 				response.sendRedirect("controller?command=go_to_base_page&AuthenticationError=Wrong login or password!");
-			}			
+				request.getSession(true).setAttribute(AttributsName.USER_STATUS, ConnectorStatus.NOT_ACTIVE);
+				request.getSession(true).setAttribute(AttributsName.ROLE, UserRole.GUEST);
+			} else if (!user.getRole().equals(UserRole.GUEST)) {
+				request.getSession(true).setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
+				request.getSession(true).setAttribute(AttributsName.ROLE, user.getRole().getName());
+				request.getSession(true).setAttribute(AttributsName.USER, user);
+				response.sendRedirect("controller?command=go_to_news_list");
+			} 
 		} catch (ServiceException e) {
 			log.error(e);
 			response.sendRedirect(JspPageName.INDEX_PAGE);
