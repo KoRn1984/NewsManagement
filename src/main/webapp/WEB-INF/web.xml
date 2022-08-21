@@ -15,5 +15,8 @@
 	<servlet-mapping>
 		<servlet-name>Controller</servlet-name>
 		<url-pattern>/controller</url-pattern>
-	</servlet-mapping>      
+	</servlet-mapping>
+	<listener>
+      <listener-class>by.itacademy.matveenko.jd2.controller.listener.NewsManagementContextListener</listener-class>  
+  </listener>     
 </web-app>

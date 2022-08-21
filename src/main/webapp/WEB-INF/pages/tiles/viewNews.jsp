@@ -46,7 +46,7 @@
 <c:if test="${sessionScope.role eq 'admin'}">
 <div class="first-view-button">
 	<form action="controller" method="post">
-		<input type="hidden" name="command" value="edit" />
+		<input type="hidden" name="command" value="go_to_edit_news_page" />
 		<input type="hidden" name="id" value="${news.id}" />
 		<input type="submit" value="Edit" />
 	</form>
@@ -54,7 +54,7 @@
 
 <div class="second-view-button">
 	<form action="controller" method="post">
-		<input type="hidden" name="command" value="delete" />
+		<input type="hidden" name="command" value="do_delete_news" />
 		<input type="hidden" name="id" value="${news.id}" />
 		<input type="submit" value="Delete" />
 	</form>
