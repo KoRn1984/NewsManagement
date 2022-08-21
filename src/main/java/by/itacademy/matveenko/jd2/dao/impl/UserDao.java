@@ -16,7 +16,7 @@ public class UserDao implements IUserDao {
 	
     @Override
     public User findUserByLoginAndPassword(String login, String password) throws DaoException {
-        String selectUserData = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE login=? and password=?";        
+        String selectUserData = "SELECT users.id as id, login, password, name, surname, email, roles.role_name as role FROM users JOIN roles on roles.id = users.role WHERE login=? and password=?";
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
             PreparedStatement ps = connection.prepareStatement(selectUserData)) {
             ps.setString(1, login);
@@ -64,7 +64,7 @@ public class UserDao implements IUserDao {
     
     @Override
     public User findById(Integer id) throws SQLException, DaoException {
-    	String selectDataFindById = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE users.id=?";
+    	String selectDataFindById = "SELECT users.id as id, login, password, name, surname, email, roles.role_name as role FROM users JOIN roles on roles.id = users.role WHERE users.id=?";
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement ps = connection.prepareStatement(selectDataFindById)) {
             ps.setInt(1, id);

@@ -25,6 +25,7 @@ public class GoToEditNewsPage implements Command {
 		HttpSession getSession = request.getSession(true);		
 		getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);		
 		getSession.setAttribute(AttributsName.NEWS_COMMANDS_NAME, EDIT_NEWS);
+		getSession.setAttribute("newsId", request.getParameter("id"));
 		request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 		//response.sendRedirect("controller?command=go_to_base_page&addnews=active");
 	}

@@ -31,17 +31,27 @@ public class DoEditNews implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(1);	
+
 		String title = request.getParameter(NewsParameterName.JSP_TITLE_NEWS);
 		String brief = request.getParameter(NewsParameterName.JSP_BRIEF_NEWS);
 		String content = request.getParameter(NewsParameterName.JSP_CONTENT_NEWS);
-		int idNews = Integer.parseInt(request.getParameter(NewsParameterName.JSP_ID_NEWS));
+		int idNews = Integer.parseInt((String)request.getSession().getAttribute("newsId"));
+		System.out.println(idNews);
 		
-		System.out.println(idNews);		
+
 		HttpSession getSession = request.getSession(true);
 				
 		try {	
-			var news = newsDao.fetchById(idNews);
+			var news = new News.Builder()
+					.withId(idNews)
+					.withDate(LocalDate.now())
+					.withTitle(title)
+					.withBrief(brief)
+					.withContent(content)
+					.withAuthor((User)getSession.getAttribute(AttributsName.USER))
+					.build();
+
+
 			if (service.update(news)) {				
 				getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 				getSession.setAttribute(AttributsName.EDIT_NEWS, COMMAND_EXECUTED);
@@ -49,7 +59,7 @@ public class DoEditNews implements Command {
 			} else {
 				response.sendRedirect(JspPageName.ERROR_PAGE);
 			}
-		} catch (ServiceException | NewsDaoException e) {
+		} catch (ServiceException e) {
 			log.error(e);
 			response.sendRedirect(JspPageName.INDEX_PAGE);
 		}		
