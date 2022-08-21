@@ -16,7 +16,7 @@
 	<c:if test="${sessionScope.editNews eq 'command_executed'}">
 	    <center><font color="green">Data updated successfully!</font></center>
 	</c:if>
-
+<form action="controller" method="post">
 	<c:forEach var="news" items="${requestScope.news}">
 		<div class="single-news-wrapper">
 			<div class="single-news-header-wrapper">			
@@ -37,8 +37,9 @@
 						      <a href="controller?command=go_to_edit_news_page&id=${news.id}">Edit</a> 
 						</c:if>						
 						<a href="controller?command=go_to_view_news&id=${news.id}">View</a>   					    
-   					    <c:if test="${sessionScope.role eq 'admin'}">
-   					         <input type="checkbox" name="idNews" value="${news.id}" />
+   					    <c:if test="${sessionScope.role eq 'admin'}">   					    
+   					         <input type="checkbox" name="id" value="${news.id}" />
+   					         <input type="hidden" name="command" value="do_delete_news" />
    					    </c:if>
 					</div>					
 				</div>
@@ -49,14 +50,11 @@
 		<div class="delete-button-position">
 			<html:submit>
 				<bean:message key="locale.newslink.deletebutton" />
-			</html:submit>
-			<form action="controller" method="post">
-		        <input type="hidden" name="command" value="delete" />
-		        <input type="hidden" name="id" value="" />
-		        <input type="submit" value="Delete" />		       
-	        </form>
+			</html:submit>		        
+		        <input type="submit" value="Delete" />        
 		</div>
 	</logic:notEmpty>
+</form>
 	<c:if test="${sessionScope.showNews eq 'not_show'}">
 	<div class="no-news">
 		<c:if test="${requestScope.news eq null}">

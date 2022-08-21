@@ -23,18 +23,18 @@
 <div class="add-table-margin">
 	<table class="news_text_format">
 <fieldset><legend><b><center>Enter your text:</center></b></legend>
-<form action="controller" method="post">		
-		<input type="hidden" name="command" value="do_edit_news" />		              						
+<form action="controller" method="post">
+		<input type="hidden" name="command" value="do_edit_news" />			              						
 		<label>News Title:<br />
-		<p><textarea type="text" name="title" value="${sessionScope.news.id.title}" style="width: 670px; height: 40px;"></textarea></p></label>        
-        <label>News Brief:<br />
-        <p><textarea type="text" name="brief" value="${sessionScope.news.id.brief}" style="width: 670px; height: 60px;"></textarea></p></label>					
+		<p><textarea type="text" name="title" placeholder="Enter text of title in the field" value="" style="width: 670px; height: 40px;"></textarea></p></label>
+		<label>News Brief:<br />
+        <p><textarea type="text" name="brief" placeholder="Enter text of brief in the field" value="" style="width: 670px; height: 60px;"></textarea></p></label>				
 		<label>News Content:<br />
-		<p><textarea type="text" name="content" value="${sessionScope.news.id.content}" style="width: 670px; height: 140px;"></textarea></p></label>			
+		<p><textarea type="text" name="content" placeholder="Enter text of content in the field" value="" style="width: 670px; height: 140px;"></textarea></p></label>	
 		<br />					
 		<input type="submit" value="Save" />
-</fieldset>	
 </form>
+</fieldset>
 </table>
 </div>
 </body>

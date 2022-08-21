@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.itacademy.matveenko.jd2.controller.impl.DoAddNews;
+import by.itacademy.matveenko.jd2.controller.impl.DoDeleteNews;
 import by.itacademy.matveenko.jd2.controller.impl.DoEditNews;
 import by.itacademy.matveenko.jd2.controller.impl.DoRegistration;
 import by.itacademy.matveenko.jd2.controller.impl.DoSignIn;
@@ -20,18 +21,17 @@ public class CommandProvider {
 	
 	public CommandProvider() {
 		commands.put(CommandName.GO_TO_BASE_PAGE, new GoToBasePage());
+		commands.put(CommandName.GO_TO_VIEW_NEWS, new GoToViewNews());
+		commands.put(CommandName.GO_TO_NEWS_LIST, new GoToNewsList());		
 		commands.put(CommandName.GO_TO_REGISTRATION_PAGE, new GoToRegistrationPageCommand());
 		commands.put(CommandName.DO_REGISTRATION, new DoRegistration());
 		commands.put(CommandName.DO_SIGN_IN, new DoSignIn());
 		commands.put(CommandName.DO_SIGN_OUT, new DoSignOut());		
-		commands.put(CommandName.GO_TO_NEWS_LIST, new GoToNewsList());
-		commands.put(CommandName.GO_TO_VIEW_NEWS, new GoToViewNews());
 		commands.put(CommandName.GO_TO_ADD_NEWS_PAGE, new GoToAddNewsPage());
         commands.put(CommandName.DO_ADD_NEWS, new DoAddNews());
         commands.put(CommandName.GO_TO_EDIT_NEWS_PAGE, new GoToEditNewsPage());
         commands.put(CommandName.DO_EDIT_NEWS, new DoEditNews());
-      //commands.put(CommandName.GO_TO_DELETE_NEWS_PAGE, new GoToDeleteNewsPage());
-      //commands.put(CommandName.DO_DELETE_NEWS, new DoDeleteNews());               
+        commands.put(CommandName.DO_DELETE_NEWS, new DoDeleteNews());
 	}
 		
 	public Command getCommand(String name) {

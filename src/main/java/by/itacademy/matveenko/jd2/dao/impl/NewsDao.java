@@ -128,7 +128,7 @@ public class NewsDao implements INewsDao {
 	@Override
 	public boolean updateNews(News news) throws NewsDaoException {
 		int row = 0;
-		String updateNews = "UPDATE newsdb.news SET title = ?, brief = ?, content = ?, date = ?, reporter = ? WHERE id = ?";
+		String updateNews = "UPDATE news SET title = ?, brief = ?, content = ?, date = ?, reporter = ? WHERE id = ?";
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 		    PreparedStatement ps = connection.prepareStatement(updateNews)) {
 			ps.setString(1, news.getTitle());
@@ -146,11 +146,32 @@ public class NewsDao implements INewsDao {
 						log.error(e);
 						throw new NewsDaoException(e);
 					}					
-	}
+	}	
 
 	@Override
-	public void deleteNewses(String[] idNewses) throws NewsDaoException {
-		// TODO Auto-generated method stub		
+	public boolean deleteNewses(String[] idNewses) throws NewsDaoException {
+		int row = 0;
+		String deleteNews = "DELETE FROM news WHERE id IN (?)";
+		try (Connection connection = ConnectionPool.getInstance().takeConnection()) {
+			try {
+				connection.setAutoCommit(false);
+		        PreparedStatement ps = connection.prepareStatement(deleteNews);
+		        for (int i = 0; i < idNewses.length; i++) {
+			    ps.setInt(1, Integer.parseInt (idNewses [i]));
+			    row = ps.executeUpdate();
+			    if (row == 0) {
+			    	return false;
+			    	}
+			    }
+		        connection.commit();
+		        connection.setAutoCommit(true);
+		        } catch (SQLException e) {
+		        	connection.rollback();
+		        	log.error(e);		        	
+		        	}
+			} catch (SQLException | ConnectionPoolException e) {
+				throw new NewsDaoException(e);
+		}
+		return true;
 	}
-		
 }

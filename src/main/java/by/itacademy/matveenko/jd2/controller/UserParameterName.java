@@ -2,8 +2,7 @@ package by.itacademy.matveenko.jd2.controller;
 
 public final class UserParameterName {
     
-	private UserParameterName() {
-    }
+	private UserParameterName() {}
 	
 	public static final String JSP_ID_PARAM = "id";
     public static final String JSP_LOGIN_PARAM = "login";

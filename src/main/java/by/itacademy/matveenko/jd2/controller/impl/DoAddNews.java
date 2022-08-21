@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-public class DoAddNews implements Command{
+public class DoAddNews implements Command {
 	private final INewsService newsService = ServiceProvider.getInstance().getNewsService();
 	private static final Logger log = LogManager.getRootLogger();
 	

@@ -10,5 +10,6 @@ public interface INewsDao {
 	News fetchById(Integer idNews) throws NewsDaoException;
 	int addNews(News news) throws NewsDaoException;
 	boolean updateNews(News news) throws NewsDaoException;
-	void deleteNewses(String[] idNewses)throws NewsDaoException;	
+	//boolean deleteNews(Integer idNews) throws NewsDaoException;	
+	boolean deleteNewses(String[] idNewses) throws NewsDaoException;	
 }

@@ -2,8 +2,7 @@ package by.itacademy.matveenko.jd2.controller;
 
 public class NewsParameterName {
 	
-	private NewsParameterName() {
-    }
+	private NewsParameterName() {}
 	
 	public static final String JSP_ID_NEWS = "id";
 	public static final String JSP_TITLE_NEWS = "title";
