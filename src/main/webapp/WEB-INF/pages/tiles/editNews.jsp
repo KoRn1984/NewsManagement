@@ -26,11 +26,11 @@
 <form action="controller" method="post">		
 		<input type="hidden" name="command" value="do_edit_news" />		              						
 		<label>News Title:<br />
-		<p><textarea type="text" name="title" value="" style="width: 670px; height: 40px;"></textarea></p></label>
+		<p><textarea type="text" name="title" value="${sessionScope.news.id.title}" style="width: 670px; height: 40px;"></textarea></p></label>        
         <label>News Brief:<br />
-        <p><textarea type="text" name="brief" value="" style="width: 670px; height: 60px;"></textarea></p></label>
+        <p><textarea type="text" name="brief" value="${sessionScope.news.id.brief}" style="width: 670px; height: 60px;"></textarea></p></label>					
 		<label>News Content:<br />
-		<p><textarea type="text" name="content" value="" style="width: 670px; height: 140px;"></textarea></p></label>
+		<p><textarea type="text" name="content" value="${sessionScope.news.id.content}" style="width: 670px; height: 140px;"></textarea></p></label>			
 		<br />					
 		<input type="submit" value="Save" />
 </fieldset>	

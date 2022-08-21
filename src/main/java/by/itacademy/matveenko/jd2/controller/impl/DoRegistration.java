@@ -52,8 +52,6 @@ public class DoRegistration implements Command {
 				}				        
 				else {					
 					getSession.setAttribute(AttributsName.REGISTER_USER, ConnectorStatus.NOT_REGISTERED);
-					//request.setAttribute("registration error", "Incorrect data entered!");
-					//request.getRequestDispatcher("/WEB-INF/pages/layouts/baseLayout.jsp").forward(request, response);
 					response.sendRedirect("controller?command=go_to_base_page&RegistrationError=Incorrect data entered!");
 					}				
 			}catch (ServiceException e) {

@@ -13,8 +13,6 @@ import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
 import by.itacademy.matveenko.jd2.controller.JspPageName;
 import by.itacademy.matveenko.jd2.controller.NewsParameterName;
-import by.itacademy.matveenko.jd2.dao.NewsDaoException;
-import by.itacademy.matveenko.jd2.dao.impl.NewsDao;
 import by.itacademy.matveenko.jd2.service.ServiceException;
 import by.itacademy.matveenko.jd2.service.impl.NewsServiceImpl;
 import jakarta.servlet.ServletException;
@@ -24,37 +22,30 @@ import jakarta.servlet.http.HttpSession;
 
 public class DoEditNews implements Command {
 	
-	private final NewsDao newsDao = new NewsDao();
-	private final NewsServiceImpl service = new NewsServiceImpl();
+	private final NewsServiceImpl newsService = new NewsServiceImpl();
 	private static final Logger log = LogManager.getRootLogger();
-	public static final String COMMAND_EXECUTED = "command_executed";
-
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		String title = request.getParameter(NewsParameterName.JSP_TITLE_NEWS);
 		String brief = request.getParameter(NewsParameterName.JSP_BRIEF_NEWS);
 		String content = request.getParameter(NewsParameterName.JSP_CONTENT_NEWS);
-		int idNews = Integer.parseInt((String)request.getSession().getAttribute("newsId"));
-		System.out.println(idNews);
-		
-
+		Integer idNews = Integer.parseInt((String)request.getSession().getAttribute(AttributsName.NEWS_ID));
+	
 		HttpSession getSession = request.getSession(true);
-				
+		
 		try {	
 			var news = new News.Builder()
 					.withId(idNews)
-					.withDate(LocalDate.now())
 					.withTitle(title)
 					.withBrief(brief)
 					.withContent(content)
+					.withDate(LocalDate.now())
 					.withAuthor((User)getSession.getAttribute(AttributsName.USER))
 					.build();
-
-
-			if (service.update(news)) {				
+			if (newsService.update(news)) {				
 				getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
-				getSession.setAttribute(AttributsName.EDIT_NEWS, COMMAND_EXECUTED);
+				getSession.setAttribute(AttributsName.EDIT_NEWS, AttributsName.COMMAND_EXECUTED);
 				response.sendRedirect("controller?command=go_to_news_list");					
 			} else {
 				response.sendRedirect(JspPageName.ERROR_PAGE);

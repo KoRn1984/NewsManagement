@@ -5,7 +5,6 @@ import by.itacademy.matveenko.jd2.service.IUserService;
 import by.itacademy.matveenko.jd2.util.validation.UserDataValidation;
 import by.itacademy.matveenko.jd2.util.validation.ValidationProvider;
 import by.itacademy.matveenko.jd2.bean.User;
-import by.itacademy.matveenko.jd2.bean.UserRole;
 import by.itacademy.matveenko.jd2.dao.DaoException;
 import by.itacademy.matveenko.jd2.dao.DaoProvider;
 import by.itacademy.matveenko.jd2.service.ServiceException;
