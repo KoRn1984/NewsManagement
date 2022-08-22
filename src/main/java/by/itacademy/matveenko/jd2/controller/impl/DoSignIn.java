@@ -39,6 +39,7 @@ public class DoSignIn implements Command {
 			if (user == null) {				
 				request.getSession(true).setAttribute(AttributsName.USER_STATUS, ConnectorStatus.NOT_ACTIVE);
 				request.getSession(true).setAttribute(AttributsName.ROLE, UserRole.GUEST);
+				request.getSession(true).setAttribute(AttributsName.PAGE_URL, "controller?command=go_to_base_page");
 				response.sendRedirect("controller?command=go_to_base_page&AuthenticationError=Wrong login or password!");
 			} else if (!user.getRole().equals(UserRole.GUEST)) {
 				request.getSession(true).setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);

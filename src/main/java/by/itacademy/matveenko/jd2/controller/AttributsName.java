@@ -17,4 +17,6 @@ public class AttributsName {
 	public static final String ADD_NEWS = "addNews";
 	public static final String EDIT_NEWS = "editNews";
 	public static final String DELETE_NEWS = "deleteNews";
+	public static final String LOCAL = "local";
+	public static final String PAGE_URL = "url";
 }
