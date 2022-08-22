@@ -1,8 +1,6 @@
 package by.itacademy.matveenko.jd2.controller.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,18 +24,14 @@ public class DoDeleteNews implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		    String title = request.getParameter(NewsParameterName.JSP_TITLE_NEWS);
-			String brief = request.getParameter(NewsParameterName.JSP_BRIEF_NEWS);
-			String content = request.getParameter(NewsParameterName.JSP_CONTENT_NEWS);
-			String[] idNewses = request.getParameterValues("idNewses");
+		    String[] idNewses = request.getParameterValues(NewsParameterName.JSP_ID_NEWS);		
 			
-			HttpSession getSession = request.getSession(true);			
+		    HttpSession getSession = request.getSession(true);			
 			
 			try {				
 				if (newsService.deleteNewsesByIds(idNewses)) {			
-					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
+					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);					
 					getSession.setAttribute(AttributsName.DELETE_NEWS, AttributsName.COMMAND_EXECUTED);
-					getSession.setAttribute("idNewses", idNewses);
 					response.sendRedirect("controller?command=go_to_news_list");					
 				} else {
 					response.sendRedirect(JspPageName.ERROR_PAGE);

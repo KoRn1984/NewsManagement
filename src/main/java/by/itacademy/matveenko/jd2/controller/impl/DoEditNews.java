@@ -31,7 +31,7 @@ public class DoEditNews implements Command {
 		String brief = request.getParameter(NewsParameterName.JSP_BRIEF_NEWS);
 		String content = request.getParameter(NewsParameterName.JSP_CONTENT_NEWS);
 		Integer idNews = Integer.parseInt((String)request.getSession().getAttribute(AttributsName.NEWS_ID));
-	
+		
 		HttpSession getSession = request.getSession(true);
 		
 		try {	

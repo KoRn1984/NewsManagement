@@ -26,6 +26,7 @@ public class GoToBasePage implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<News> latestNews;
+		
 		try {
 			latestNews = newsService.latestList(5);			
 			request.setAttribute(AttributsName.NEWS, latestNews);			

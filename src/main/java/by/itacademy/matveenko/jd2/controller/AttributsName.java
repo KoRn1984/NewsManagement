@@ -8,7 +8,9 @@ public class AttributsName {
 	public static final String NEWS = "news";
 	public static final String NEWS_ID = "newsId";
 	public static final String SHOW_NEWS = "showNews";
-	public static final String PRESENTATION = "presentation";	
+	public static final String DO_NOT_SHOW_NEWS = "not_show";
+	public static final String PRESENTATION = "presentation";
+	public static final String VIEW_NEWS = "viewNews";
 	public static final String NEWS_COMMANDS_NAME = "commandsName";
 	public static final String COMMAND_NAME = "command";
 	public static final String COMMAND_EXECUTED = "command_executed";

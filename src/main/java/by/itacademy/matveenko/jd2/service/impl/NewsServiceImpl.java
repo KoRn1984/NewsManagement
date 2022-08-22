@@ -1,6 +1,5 @@
 package by.itacademy.matveenko.jd2.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.itacademy.matveenko.jd2.bean.News;
@@ -64,22 +63,10 @@ public class NewsServiceImpl implements INewsService{
 		}
 	}
 	
-	//@Override
-	//public boolean deleteNewsById(Integer idNews) throws ServiceException {
-	//	try {
-	//		if (!(newsDao.deleteNews(idNews))) {
-	//			return false;
-	//		}
-	//		return true;
-	//	} catch (NewsDaoException e) {
-	//		throw new ServiceException(e);
-	//	}
-	//}
-
 	@Override
 	public boolean deleteNewsesByIds(String[] idNewses) throws ServiceException {		
 		try {
-			if ((newsDao.deleteNewses(idNewses))) {							
+			if (!(newsDao.deleteNewses(idNewses))) {							
 				return false;
 			}
 			return true;

@@ -27,10 +27,8 @@ public class DoSignIn implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login;
-		String password;
-		login = request.getParameter(UserParameterName.JSP_LOGIN_PARAM);
-		password = request.getParameter(UserParameterName.JSP_PASSWORD_PARAM);	
+		String login = request.getParameter(UserParameterName.JSP_LOGIN_PARAM);
+		String password = request.getParameter(UserParameterName.JSP_PASSWORD_PARAM);	
 
 		if (!dataValidation(login, password)) {
             response.sendRedirect(JspPageName.INDEX_PAGE);
@@ -38,10 +36,10 @@ public class DoSignIn implements Command {
         }
 		try {
 			User user = service.signIn(login, password);
-			if (user == null) {
-				response.sendRedirect("controller?command=go_to_base_page&AuthenticationError=Wrong login or password!");
+			if (user == null) {				
 				request.getSession(true).setAttribute(AttributsName.USER_STATUS, ConnectorStatus.NOT_ACTIVE);
 				request.getSession(true).setAttribute(AttributsName.ROLE, UserRole.GUEST);
+				response.sendRedirect("controller?command=go_to_base_page&AuthenticationError=Wrong login or password!");
 			} else if (!user.getRole().equals(UserRole.GUEST)) {
 				request.getSession(true).setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 				request.getSession(true).setAttribute(AttributsName.ROLE, user.getRole().getName());

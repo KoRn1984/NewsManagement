@@ -14,9 +14,9 @@ import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPoolException;
 
 public class UserDao implements IUserDao {
 	
+	String selectUserData = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE login=? and password=?";
     @Override
-    public User findUserByLoginAndPassword(String login, String password) throws DaoException {
-        String selectUserData = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE login=? and password=?";        
+    public User findUserByLoginAndPassword(String login, String password) throws DaoException {                
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
             PreparedStatement ps = connection.prepareStatement(selectUserData)) {
             ps.setString(1, login);
@@ -42,9 +42,9 @@ public class UserDao implements IUserDao {
         return null;
     }
 
+    String insertRegistrationData = "INSERT INTO users(login, password, name, surname, email, role) VALUES (?,?,?,?,?,?)";
     @Override
-    public boolean saveUser(User user) throws DaoException {
-        String insertRegistrationData = "INSERT INTO users(login, password, name, surname, email, role) VALUES (?,?,?,?,?,?)";
+    public boolean saveUser(User user) throws DaoException {        
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
             PreparedStatement ps = connection.prepareStatement(insertRegistrationData)) {
         	ps.setString(1, user.getLogin());
@@ -62,9 +62,9 @@ public class UserDao implements IUserDao {
         return true;
     }
     
+    String selectDataFindById = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE users.id=?";
     @Override
-    public User findById(Integer id) throws SQLException, DaoException {
-    	String selectDataFindById = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE users.id=?";
+    public User findById(Integer id) throws SQLException, DaoException {    	
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement ps = connection.prepareStatement(selectDataFindById)) {
             ps.setInt(1, id);

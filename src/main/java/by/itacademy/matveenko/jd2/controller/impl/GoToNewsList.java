@@ -28,6 +28,7 @@ public class GoToNewsList implements Command {
 		List<News> newsList;
 		Integer pageNumber = 1;
 		Integer pageSize = 5;
+		
 		try {
 			newsList = newsService.newsList(pageNumber, pageSize);
 			request.setAttribute(AttributsName.NEWS, newsList);

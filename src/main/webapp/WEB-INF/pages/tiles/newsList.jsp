@@ -11,11 +11,14 @@
 		<center><font color="green">Registration completed successfully!</font></center>
 	</c:if>				     
 	<c:if test="${sessionScope.addNews eq 'command_executed'}">
-	    <center><font color="green">Data saved successfully!</font></center>
+	    <center><font color="blue">Data saved successfully!</font></center>
 	</c:if>
 	<c:if test="${sessionScope.editNews eq 'command_executed'}">
-	    <center><font color="green">Data updated successfully!</font></center>
+	    <center><font color="orange">Data updated successfully!</font></center>
 	</c:if>
+	<c:if test="${sessionScope.deleteNews eq 'command_executed'}">
+	    <center><font color="grey">Data deleted successfully!</font></center>
+	</c:if>	
 <form action="controller" method="post">
 	<c:forEach var="news" items="${requestScope.news}">
 		<div class="single-news-wrapper">
@@ -50,8 +53,8 @@
 		<div class="delete-button-position">
 			<html:submit>
 				<bean:message key="locale.newslink.deletebutton" />
-			</html:submit>		        
-		        <input type="submit" value="Delete" />        
+				<input type="submit" value="Delete" />
+			</html:submit>		                
 		</div>
 	</logic:notEmpty>
 </form>
