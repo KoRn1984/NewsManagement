@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mindrot.jbcrypt.BCrypt;
-
 import by.itacademy.matveenko.jd2.service.IUserService;
 import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
 import by.itacademy.matveenko.jd2.bean.User;
@@ -25,16 +23,10 @@ public class DoSignIn implements Command {
 	private final IUserService service = ServiceProvider.getInstance().getUserService();
 	private static final Logger log = LogManager.getRootLogger();
 
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter(UserParameterName.JSP_LOGIN_PARAM);
 		String password = request.getParameter(UserParameterName.JSP_PASSWORD_PARAM);
-		//String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-		
-		//HttpSession getSession = request.getSession(true);
-		//request.getSession(true).getAttribute(UserParameterName.JSP_PASSWORD_PARAM);		
-		//var user = (User) getSession.getAttribute(AttributsName.USER);			     
 		
 		if (!dataValidation(login, password)) {
             response.sendRedirect(JspPageName.INDEX_PAGE);

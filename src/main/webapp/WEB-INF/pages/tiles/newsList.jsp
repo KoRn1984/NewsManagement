@@ -50,6 +50,7 @@
 			</div>
 		</div>
 	</c:forEach>
+	<c:if test="${sessionScope.role eq 'admin'}">
 	<logic:notEmpty name="newsForm" property="newsList">
 		<div class="delete-button-position">
 			<html:submit>
@@ -58,6 +59,7 @@
 			</html:submit>		                
 		</div>
 	</logic:notEmpty>
+	</c:if>
 </form>
 	<c:if test="${sessionScope.showNews eq 'not_show'}">
 	<div class="no-news">

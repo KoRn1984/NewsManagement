@@ -35,14 +35,20 @@ public class UserServiceImpl implements IUserService{
 		}
 	
 	@Override
-	public boolean registration(User user) throws ServiceException  {		
+	public boolean registration(User user) throws ServiceException  {
 		  if (!userDataValidation.checkAuthDataRegistration(user)) {
 			  throw new ServiceException("Invalid registration data!");
 	  }
-		  try {
-			   return userDao.saveUser(user);			  
+		  try {			  
+			  if((user != null)) {
+				  String hashPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+				  user.setPassword(hashPassword);	                    
+				  return userDao.saveUser(user);			
+					} else {
+						return false;
+					}			  			  
 		   }catch(DaoException e) {
 				throw new ServiceException(e);
 				}		  
-		  }
-	}
+	}	
+}

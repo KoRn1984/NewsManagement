@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mindrot.jbcrypt.BCrypt;
-
 import by.itacademy.matveenko.jd2.bean.UserRole;
 import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
 import by.itacademy.matveenko.jd2.bean.User;
@@ -34,12 +32,11 @@ public class DoRegistration implements Command {
 		    String userSurname = request.getParameter(UserParameterName.JSP_SURNAME_PARAM);
 		    String email = request.getParameter(UserParameterName.JSP_EMAIL_PARAM);		    
 		    UserRole role = UserRole.USER;
-		    String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-		    
+		    		    
 		    HttpSession getSession = request.getSession(true);
 			User user = new User.Builder()
 					.withLogin(login)
-                    .withPassword(hashPassword)                   
+                    .withPassword(password)                   
                     .withUserName(userName)
                     .withUserSurname(userSurname)                    
                     .withEmail(email)

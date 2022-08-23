@@ -16,6 +16,7 @@ public class UserDao implements IUserDao {
 	
 	String selectUserData = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE login=? and password=?";
     @Override
+    @Deprecated
     public User findUserByLoginAndPassword(String login, String hashPassword) throws DaoException {
     	System.out.println(hashPassword);
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
@@ -43,9 +44,9 @@ public class UserDao implements IUserDao {
         return null;
     }
     
-   
-    public User findUserByLogin(String login) throws DaoException {
-    	String selectUserLogin = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE login=?";
+    String selectUserLogin = "SELECT users.id as id, login, password, name, surname, email, roles.role as role FROM users JOIN roles on roles.id = users.role WHERE login=?";
+    @Override
+    public User findUserByLogin(String login) throws DaoException {    	
     	try (Connection connection = ConnectionPool.getInstance().takeConnection();
                 PreparedStatement ps = connection.prepareStatement(selectUserLogin)) {
                 ps.setString(1, login);                
