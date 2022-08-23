@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mindrot.jbcrypt.BCrypt;
 
 import by.itacademy.matveenko.jd2.service.IUserService;
 import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
@@ -28,8 +29,13 @@ public class DoSignIn implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter(UserParameterName.JSP_LOGIN_PARAM);
-		String password = request.getParameter(UserParameterName.JSP_PASSWORD_PARAM);	
-
+		String password = request.getParameter(UserParameterName.JSP_PASSWORD_PARAM);
+		//String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+		
+		//HttpSession getSession = request.getSession(true);
+		//request.getSession(true).getAttribute(UserParameterName.JSP_PASSWORD_PARAM);		
+		//var user = (User) getSession.getAttribute(AttributsName.USER);			     
+		
 		if (!dataValidation(login, password)) {
             response.sendRedirect(JspPageName.INDEX_PAGE);
             return;
@@ -38,7 +44,7 @@ public class DoSignIn implements Command {
 			User user = service.signIn(login, password);
 			if (user == null) {				
 				request.getSession(true).setAttribute(AttributsName.USER_STATUS, ConnectorStatus.NOT_ACTIVE);
-				request.getSession(true).setAttribute(AttributsName.ROLE, UserRole.GUEST);
+				request.getSession(true).setAttribute(AttributsName.ROLE, UserRole.GUEST);				
 				request.getSession(true).setAttribute(AttributsName.PAGE_URL, "controller?command=go_to_base_page");
 				response.sendRedirect("controller?command=go_to_base_page&AuthenticationError=Wrong login or password!");
 			} else if (!user.getRole().equals(UserRole.GUEST)) {
@@ -51,12 +57,12 @@ public class DoSignIn implements Command {
 			log.error(e);
 			response.sendRedirect(JspPageName.INDEX_PAGE);
 		}		
-	}
+	}	
 	
 	private boolean dataValidation(String login, String password) {
         if (login == null || password == null) {
             return false;
         }
         return true;
-    }
+    }	
 }

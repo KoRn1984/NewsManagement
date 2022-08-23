@@ -39,7 +39,7 @@ public class DoRegistration implements Command {
 		    HttpSession getSession = request.getSession(true);
 			User user = new User.Builder()
 					.withLogin(login)
-                    .withPassword(hashPassword)                    
+                    .withPassword(hashPassword)                   
                     .withUserName(userName)
                     .withUserSurname(userSurname)                    
                     .withEmail(email)
