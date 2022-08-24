@@ -1,8 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="localization.local" var="loc" />    
+<fmt:message bundle="${loc}" key="local.loc.name.newses" var="newses" />
+<fmt:message bundle="${loc}" key="local.loc.name.newsList" var="news_list" />
+<fmt:message bundle="${loc}" key="local.loc.name.edit" var="edit" />
+<fmt:message bundle="${loc}" key="local.loc.name.view" var="view" />
+<fmt:message bundle="${loc}" key="local.loc.name.delete" var="delete" />
+<fmt:message bundle="${loc}" key="local.loc.name.noNews" var="no_news" />
+
 <div class="body-title">
-	<a href="controller?command=go_to_news_list">News >> </a>News List
+	<a href="controller?command=go_to_news_list">${newses} >> </a>${news_list}
 </div>
 <form action="controller" method="post">
     <c:if test="${sessionScope.register_user eq 'not_registered'}">
@@ -38,9 +48,9 @@
 				<div class="news-link-to-wrapper">
 					<div class="link-position">
 						<c:if test="${sessionScope.role eq 'admin'}">
-						      <a href="controller?command=go_to_edit_news_page&id=${news.id}">Edit</a> 
-						</c:if>						
-						<a href="controller?command=go_to_view_news&id=${news.id}">View</a>   					    
+						      <a href="controller?command=go_to_edit_news_page&id=${news.id}">${edit}</a> 
+						</c:if>&nbsp;&nbsp;				
+						<a href="controller?command=go_to_view_news&id=${news.id}">${view}</a>   					    
    					    <c:if test="${sessionScope.role eq 'admin'}">   					    
    					         <input type="checkbox" name="id" value="${news.id}" />
    					         <input type="hidden" name="command" value="do_delete_news" />
@@ -55,7 +65,7 @@
 		<div class="delete-button-position">
 			<html:submit>
 				<bean:message key="locale.newslink.deletebutton" />
-				<input type="submit" value="Delete" />
+				<input type="submit" value="${delete}" />
 			</html:submit>		                
 		</div>
 	</logic:notEmpty>
@@ -65,7 +75,7 @@
 	<div class="no-news">
 		<c:if test="${requestScope.news eq null}">
 		<font color="red">
-        No news for unregistered user!
+        ${no_news}!
         </font>
 	    </c:if>
 	</div>

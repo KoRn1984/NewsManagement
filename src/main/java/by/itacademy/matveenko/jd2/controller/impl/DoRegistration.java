@@ -46,7 +46,7 @@ public class DoRegistration implements Command {
 				if (service.registration(user)) {
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 					getSession.setAttribute(AttributsName.ROLE, role.getName());
-					getSession.setAttribute(AttributsName.REGISTER_USER, ConnectorStatus.REGISTERED);					
+					getSession.setAttribute(AttributsName.REGISTER_USER, ConnectorStatus.REGISTERED);
 					response.sendRedirect("controller?command=go_to_news_list");														
 				}				        
 				else {					

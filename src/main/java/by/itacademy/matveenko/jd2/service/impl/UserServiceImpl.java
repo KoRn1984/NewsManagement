@@ -24,7 +24,7 @@ public class UserServiceImpl implements IUserService{
    	 }
 		try {
 			User user = userDao.findUserByLogin(login);			
-			if((user != null) && (BCrypt.checkpw(password, user.getPassword()))) {
+			if((user != null) && (BCrypt.checkpw(password, user.getPassword())) && (login.equals(user.getLogin()))) {
 				return user;				
 				} else {
 					return null;

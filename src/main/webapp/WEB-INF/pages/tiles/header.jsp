@@ -1,18 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<div class="wrapper">
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
-<fmt:message bundle="${loc}" key="local.locbutton.name.ru" var="ru_button" />
-	<fmt:message bundle="${loc}" key="local.locbutton.name.en" var="en_button" />
-	<fmt:message bundle="${loc}" key="local.loctitle.name.newsManagement" var="news_management" />
-	<fmt:message bundle="${loc}" key="local.locbutton.name.signIn" var="sign_in" />
-	<fmt:message bundle="${loc}" key="local.locbutton.name.signOut" var="sign_out" />
-	<fmt:message bundle="${loc}" key="local.locbutton.name.enterLogin" var="enter_login" />
-	<fmt:message bundle="${loc}" key="local.locbutton.name.enterPassword" var="enter_password" />
-	<fmt:message bundle="${loc}" key="local.loclclink.name.registration" var="registration" />
-	<div class="newstitle">News management</div>
+<fmt:message bundle="${loc}" key="local.loc.name.ru" var="ru_button" />
+<fmt:message bundle="${loc}" key="local.loc.name.en" var="en_button" />
+<fmt:message bundle="${loc}" key="local.loc.name.newsManagement" var="news_management" />
+<fmt:message bundle="${loc}" key="local.loc.name.signIn" var="sign_in" />
+<fmt:message bundle="${loc}" key="local.loc.name.signOut" var="sign_out" />
+<fmt:message bundle="${loc}" key="local.loc.name.enterLogin" var="enter_login" />
+<fmt:message bundle="${loc}" key="local.loc.name.enterPassword" var="enter_password" />
+<fmt:message bundle="${loc}" key="local.loc.name.registration" var="registration" />
+
+<div class="wrapper">    
+	<div class="newstitle">${news_management}</div>
 	<div class="local-link">	
 		<div align="right">	    
 			<a href="${sessionScope.url}&local=en">${en_button}</a>&nbsp;&nbsp;
@@ -30,17 +32,17 @@
 						</font> 
 					</c:if>
 					<input type="hidden" name="command" value="do_registration" />
-					<a href="controller?command=go_to_registration_page">Registration</a>
-					<input type="submit" value="Sign In" /><br />
+					<a href="controller?command=go_to_registration_page">${registration}</a>
+					<input type="submit" value="${sign_in}" /><br />
 				</form>
 			</div>
 		</c:if>			
 		<c:if test="${sessionScope.user_status eq 'active'}">
 			<div align="right">
-			<center><font color="blue">${user.userName}</font>&nbsp;&nbsp;<font color="blue">${user.userSurname}</font></center>
+			<font color="blue">${user.userName}</font>&nbsp;&nbsp;<font color="blue">${user.userSurname}</font>
 				<form action="controller" method="post">
 					<input type="hidden" name="command" value="do_sign_out" />
-					<input type="submit" value="Sign Out" /><br />
+					<input type="submit" value="${sign_out}" /><br />
 				</form>
 			</div>
 		</c:if>		
