@@ -6,19 +6,23 @@ import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
 import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
 import by.itacademy.matveenko.jd2.controller.JspPageName;
+import by.itacademy.matveenko.jd2.controller.PageUrl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-public class GoToAddNewsPage implements Command {	
-	
+public class GoToAddNewsPage implements Command {
+		
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		HttpSession getSession = request.getSession(true);		
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String local = request.getParameter(AttributsName.LOCAL);
+		HttpSession getSession = request.getSession(true);
+		request.getSession(true).setAttribute(AttributsName.LOCAL, local);
+		request.getSession(true).setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE);
 		getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);		
-		getSession.setAttribute(AttributsName.NEWS_COMMANDS_NAME, AttributsName.ADD_NEWS);
-		request.getSession(true).setAttribute(AttributsName.PAGE_URL, "controller?command=go_to_add_news_page");
+		getSession.setAttribute(AttributsName.NEWS_COMMANDS_NAME, AttributsName.ADD_NEWS);		
 		request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
+		getSession.removeAttribute(AttributsName.NEWS_COMMANDS_NAME);	
 	}
 }

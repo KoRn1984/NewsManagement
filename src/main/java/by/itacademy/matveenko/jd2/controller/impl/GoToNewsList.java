@@ -10,12 +10,14 @@ import by.itacademy.matveenko.jd2.bean.News;
 import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
 import by.itacademy.matveenko.jd2.controller.JspPageName;
+import by.itacademy.matveenko.jd2.controller.PageUrl;
 import by.itacademy.matveenko.jd2.service.INewsService;
 import by.itacademy.matveenko.jd2.service.ServiceException;
 import by.itacademy.matveenko.jd2.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class GoToNewsList implements Command {
 	
@@ -24,16 +26,19 @@ public class GoToNewsList implements Command {
 			
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String local = request.getParameter(AttributsName.LOCAL);
 		List<News> newsList;
 		Integer pageNumber = 1;
-		Integer pageSize = 5;
-		
+		Integer pageSize = 5;		
 		try {
+			HttpSession getSession = request.getSession(true);
+			getSession.setAttribute(AttributsName.LOCAL, local);
+			getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.NEWS_LIST_PAGE);
 			newsList = newsService.newsList(pageNumber, pageSize);
 			request.setAttribute(AttributsName.NEWS, newsList);
-			request.setAttribute(AttributsName.PRESENTATION, AttributsName.NEWS_LIST);
-			request.getSession(true).setAttribute(AttributsName.PAGE_URL, "controller?command=go_to_news_list");
-			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);			
+			request.setAttribute(AttributsName.PRESENTATION, AttributsName.NEWS_LIST);			
+			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
+			request.setAttribute(AttributsName.REGISTER_USER, null);
 		} catch (ServiceException e) {
 			log.error(e);
 			response.sendRedirect(JspPageName.ERROR_PAGE);

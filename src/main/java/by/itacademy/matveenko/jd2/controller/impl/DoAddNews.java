@@ -12,6 +12,7 @@ import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
 import by.itacademy.matveenko.jd2.controller.JspPageName;
 import by.itacademy.matveenko.jd2.controller.NewsParameterName;
+import by.itacademy.matveenko.jd2.controller.PageUrl;
 import by.itacademy.matveenko.jd2.service.INewsService;
 import by.itacademy.matveenko.jd2.service.ServiceException;
 import by.itacademy.matveenko.jd2.service.ServiceProvider;
@@ -30,8 +31,9 @@ public class DoAddNews implements Command {
 		    String title = request.getParameter(NewsParameterName.JSP_TITLE_NEWS);
 			String brief = request.getParameter(NewsParameterName.JSP_BRIEF_NEWS);
 			String content = request.getParameter(NewsParameterName.JSP_CONTENT_NEWS);
-						
+			String local = request.getParameter(AttributsName.LOCAL);
 			HttpSession getSession = request.getSession(true);
+			getSession.setAttribute(AttributsName.LOCAL, local);
 			
 			var user = (User) getSession.getAttribute(AttributsName.USER);
 			News news = new News.Builder()
@@ -42,10 +44,11 @@ public class DoAddNews implements Command {
                     .withAuthor(user)
                     .build();
 			try {				
-				if (newsService.save(news)) {				
+				if (newsService.save(news)) {					
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 					getSession.setAttribute(AttributsName.ADD_NEWS, AttributsName.COMMAND_EXECUTED);
-					response.sendRedirect("controller?command=go_to_news_list");					
+					getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE + "&local=" + local);
+					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + "&local=" + local);
 				} else {
 					response.sendRedirect(JspPageName.ERROR_PAGE);
 				}

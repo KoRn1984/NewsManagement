@@ -41,7 +41,9 @@
 				
                <div class="registration">
 		             <c:if test="${sessionScope.register_user eq 'not_registered'}">
+		             <c:if test="${sessionScope.commandsName eq 'register'}">
 				           <c:import url="/WEB-INF/pages/tiles/registration.jsp" />
+				     </c:if>
 				     </c:if><br />
 				     <c:if test="${not (param.RegistrationError eq null)}">					
 						<font color="red">

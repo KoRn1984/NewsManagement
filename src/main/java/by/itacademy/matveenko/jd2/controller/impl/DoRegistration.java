@@ -11,6 +11,7 @@ import by.itacademy.matveenko.jd2.service.ServiceException;
 import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
 import by.itacademy.matveenko.jd2.controller.JspPageName;
+import by.itacademy.matveenko.jd2.controller.PageUrl;
 import by.itacademy.matveenko.jd2.controller.UserParameterName;
 import by.itacademy.matveenko.jd2.service.IUserService;
 import by.itacademy.matveenko.jd2.service.ServiceProvider;
@@ -31,9 +32,11 @@ public class DoRegistration implements Command {
 			String userName = request.getParameter(UserParameterName.JSP_NAME_PARAM);
 		    String userSurname = request.getParameter(UserParameterName.JSP_SURNAME_PARAM);
 		    String email = request.getParameter(UserParameterName.JSP_EMAIL_PARAM);		    
-		    UserRole role = UserRole.USER;
-		    		    
-		    HttpSession getSession = request.getSession(true);
+		    UserRole role = UserRole.USER;		    	    
+		    String local = request.getParameter(AttributsName.LOCAL);
+			HttpSession getSession = request.getSession(true);
+			getSession.setAttribute(AttributsName.LOCAL, local);
+			
 			User user = new User.Builder()
 					.withLogin(login)
                     .withPassword(password)                   
@@ -47,7 +50,7 @@ public class DoRegistration implements Command {
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 					getSession.setAttribute(AttributsName.ROLE, role.getName());
 					getSession.setAttribute(AttributsName.REGISTER_USER, ConnectorStatus.REGISTERED);
-					response.sendRedirect("controller?command=go_to_news_list");														
+					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + "&local=" + local);														
 				}				        
 				else {					
 					getSession.setAttribute(AttributsName.REGISTER_USER, ConnectorStatus.NOT_REGISTERED);
