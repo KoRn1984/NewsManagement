@@ -17,6 +17,7 @@ import by.itacademy.matveenko.jd2.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class GoToViewNews implements Command {
 	
@@ -26,9 +27,10 @@ public class GoToViewNews implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String local = request.getParameter(AttributsName.LOCAL);
-		News news = null;						
-		try {
-			request.getSession(true).setAttribute(AttributsName.LOCAL, local);
+		News news = null;
+		HttpSession getSession = request.getSession(true);
+		try {			
+			getSession.setAttribute(AttributsName.LOCAL, local);
 			String id = request.getParameter(NewsParameterName.JSP_ID_NEWS);
 			news = newsService.findById(Integer.parseInt(id));
 			StringBuilder urlBuilder = new StringBuilder(PageUrl.VIEW_NEWS);
@@ -36,7 +38,7 @@ public class GoToViewNews implements Command {
 			if (news == null) {
 				response.sendRedirect(JspPageName.ERROR_PAGE);
 			} else {
-				request.getSession(true).setAttribute(AttributsName.PAGE_URL, urlBuilder);
+				getSession.setAttribute(AttributsName.PAGE_URL, urlBuilder);
 				request.setAttribute(AttributsName.NEWS, news);		
 				request.setAttribute(AttributsName.PRESENTATION, AttributsName.VIEW_NEWS);
 				request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);

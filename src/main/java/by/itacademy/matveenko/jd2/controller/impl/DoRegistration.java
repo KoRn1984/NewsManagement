@@ -24,6 +24,7 @@ public class DoRegistration implements Command {
 	
 	private final IUserService service = ServiceProvider.getInstance().getUserService();
 	private static final Logger log = LogManager.getRootLogger();
+	private static final String ERROR_REGISTRATION_MESSAGE = "&RegistrationError=Incorrect data entered!";
 		
 		@Override
 		public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,8 +36,7 @@ public class DoRegistration implements Command {
 		    UserRole role = UserRole.USER;		    	    
 		    String local = request.getParameter(AttributsName.LOCAL);
 			HttpSession getSession = request.getSession(true);
-			getSession.setAttribute(AttributsName.LOCAL, local);
-			
+						
 			User user = new User.Builder()
 					.withLogin(login)
                     .withPassword(password)                   
@@ -48,17 +48,19 @@ public class DoRegistration implements Command {
 		    try {		   
 				if (service.registration(user)) {
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
-					getSession.setAttribute(AttributsName.ROLE, role.getName());
+					getSession.setAttribute(AttributsName.ROLE, user.getRole().getName());
+					getSession.setAttribute(AttributsName.USER, user);
 					getSession.setAttribute(AttributsName.REGISTER_USER, ConnectorStatus.REGISTERED);
-					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + "&local=" + local);														
-				}				        
+					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);					
+				}
 				else {					
 					getSession.setAttribute(AttributsName.REGISTER_USER, ConnectorStatus.NOT_REGISTERED);
-					response.sendRedirect("controller?command=go_to_base_page&RegistrationError=Incorrect data entered!");
-					}				
-			}catch (ServiceException e) {
-				log.error(e);
-				response.sendRedirect(JspPageName.INDEX_PAGE);
-		    }
+					request.setAttribute(AttributsName.SHOW_NEWS, AttributsName.DO_NOT_SHOW_NEWS);
+					request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
+					}										
+			} catch (ServiceException e) {
+				log.error(e);			
+				response.sendRedirect(PageUrl.REGISTRATION_PAGE + ERROR_REGISTRATION_MESSAGE + PageUrl.AMPERSAND_LOCAL + local);
+		    } 
 		}
 }

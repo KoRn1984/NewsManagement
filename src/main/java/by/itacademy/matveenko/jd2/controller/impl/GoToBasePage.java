@@ -30,10 +30,10 @@ public class GoToBasePage implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String local = request.getParameter(AttributsName.LOCAL);
 		List<News> latestNews;
-		try {
-			HttpSession getSession = request.getSession(true);
+		HttpSession getSession = request.getSession(true);
+		try {			
 			getSession.setAttribute(AttributsName.LOCAL, local);
-			request.getSession(true).setAttribute(AttributsName.PAGE_URL, PageUrl.BASE_PAGE);
+			getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.BASE_PAGE);
 			latestNews = newsService.latestList(COUNT_NEWS);			
 			request.setAttribute(AttributsName.NEWS, latestNews);			
 		} catch (ServiceException e) {			
@@ -41,7 +41,7 @@ public class GoToBasePage implements Command{
 			response.sendRedirect(JspPageName.ERROR_PAGE);
 		} finally {
 			request.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.NOT_ACTIVE);
-			request.getSession(true).setAttribute(AttributsName.PAGE_URL, PageUrl.BASE_PAGE);
+			getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.BASE_PAGE);
 			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 		}
 	}

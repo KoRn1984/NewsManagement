@@ -13,9 +13,9 @@ public class DoChangeLocal implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession getSession = request.getSession(true);
 		String local = request.getParameter(AttributsName.LOCAL);
+		HttpSession getSession = request.getSession(true);
 		getSession.setAttribute(AttributsName.LOCAL, local);
 		response.sendRedirect((String) getSession.getAttribute(AttributsName.PAGE_URL));
-	}	
+	}
 }

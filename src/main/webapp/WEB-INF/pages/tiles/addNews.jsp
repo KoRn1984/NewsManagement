@@ -47,7 +47,12 @@
 		<label>${content}:<br />
 		<p><textarea type="text" name="content" placeholder="Enter text of content in the field" value="" style="width: 670px; height: 140px;"></textarea></p></label>			
 		<br />
-		<input type="hidden" name="local" value="${local}" />					
+		<c:if test="${not (param.AddNewsError eq null)}">					
+			<font color="red">
+				<c:out value="${param.AddNewsError}" />
+			</font> 
+		</c:if><br />			 
+		<input type="hidden" name="local" value="${local}" />				
 		<input type="submit" value="${save}" />		
 </fieldset>	
 </form>

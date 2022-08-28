@@ -17,9 +17,11 @@
 	<div class="newstitle">${news_management}</div>
 	<div class="local-link">	
 		<div align="right">
-		<input type="hidden" name="command" value="do_change_local" />	    
+		<form action="controller" method="post">
+		    <input type="hidden" name="command" value="do_change_local" />
 			<a href="${sessionScope.url}&local=en">${en_button}</a>&nbsp;&nbsp;
 			<a href="${sessionScope.url}&local=ru">${ru_button}</a><br /><br />
+			</form>
 		</div>		
 		<c:if test="${not (sessionScope.user_status eq 'active')}">
 			<div align="right">

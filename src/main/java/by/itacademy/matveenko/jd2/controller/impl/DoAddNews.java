@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpSession;
 public class DoAddNews implements Command {
 	private final INewsService newsService = ServiceProvider.getInstance().getNewsService();
 	private static final Logger log = LogManager.getRootLogger();
-	
+	private static final String ERROR_ADD_NEWS_MESSAGE = "&AddNewsError=Incorrect data entered!";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,8 +33,7 @@ public class DoAddNews implements Command {
 			String content = request.getParameter(NewsParameterName.JSP_CONTENT_NEWS);
 			String local = request.getParameter(AttributsName.LOCAL);
 			HttpSession getSession = request.getSession(true);
-			getSession.setAttribute(AttributsName.LOCAL, local);
-			
+						
 			var user = (User) getSession.getAttribute(AttributsName.USER);
 			News news = new News.Builder()
 					.withTitle(title)
@@ -47,14 +46,14 @@ public class DoAddNews implements Command {
 				if (newsService.save(news)) {					
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 					getSession.setAttribute(AttributsName.ADD_NEWS, AttributsName.COMMAND_EXECUTED);
-					getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE + "&local=" + local);
-					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + "&local=" + local);
+					getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE + PageUrl.AMPERSAND_LOCAL + local);
+					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);
 				} else {
 					response.sendRedirect(JspPageName.ERROR_PAGE);
 				}
 			} catch (ServiceException e) {
 				log.error(e);
-				response.sendRedirect(JspPageName.INDEX_PAGE);
+				response.sendRedirect(PageUrl.ADD_NEWS_PAGE + ERROR_ADD_NEWS_MESSAGE + PageUrl.AMPERSAND_LOCAL + local);	
 			}
 		}
 	}

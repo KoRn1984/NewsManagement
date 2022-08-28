@@ -29,9 +29,9 @@ public class DoSignIn implements Command {
 	private final IUserService service = ServiceProvider.getInstance().getUserService();
 	private final INewsService newsService = ServiceProvider.getInstance().getNewsService();
 	private static final Logger log = LogManager.getRootLogger();
+	private static final String ERROR_SIGN_IN_MESSAGE = "&AuthenticationError=Wrong login or password!";
 	private static final int COUNT_NEWS = 5;
-	private static final String ERROR_SIGN_IN_MESSAGE = "Wrong login or password!";
-
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter(UserParameterName.JSP_LOGIN_PARAM);
@@ -45,7 +45,6 @@ public class DoSignIn implements Command {
         }
 		try {
 			HttpSession getSession = request.getSession(true);
-			getSession.setAttribute(AttributsName.LOCAL, local);
 			User user = service.signIn(login, password);
 			latestNews = newsService.latestList(COUNT_NEWS);
 			if (user == null) {				
@@ -53,13 +52,13 @@ public class DoSignIn implements Command {
 				getSession.removeAttribute(AttributsName.REGISTER_USER);
 				getSession.setAttribute(AttributsName.ROLE, UserRole.GUEST);
 				request.setAttribute(AttributsName.NEWS, latestNews);
-				response.sendRedirect(PageUrl.BASE_PAGE + "&AuthenticationError=" + ERROR_SIGN_IN_MESSAGE + "&local=" + local);
+				response.sendRedirect(PageUrl.BASE_PAGE + ERROR_SIGN_IN_MESSAGE + PageUrl.AMPERSAND_LOCAL + local);
 			} else if (!user.getRole().equals(UserRole.GUEST)) {
 				getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 				getSession.setAttribute(AttributsName.ROLE, user.getRole().getName());
 				getSession.setAttribute(AttributsName.USER, user);
 				getSession.removeAttribute(AttributsName.REGISTER_USER);
-				response.sendRedirect(PageUrl.NEWS_LIST_PAGE + "&local=" + local);
+				response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);
 			} 
 		} catch (ServiceException e) {
 			log.error(e);

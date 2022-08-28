@@ -28,13 +28,12 @@ public class DoDeleteNews implements Command {
 		    String[] idNewses = request.getParameterValues(NewsParameterName.JSP_ID_NEWS);		
 		    String local = request.getParameter(AttributsName.LOCAL);
 			HttpSession getSession = request.getSession(true);
-			getSession.setAttribute(AttributsName.LOCAL, local);
-			
+						
 			try {				
 				if (newsService.deleteNewsesByIds(idNewses)) {			
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);					
 					getSession.setAttribute(AttributsName.DELETE_NEWS, AttributsName.COMMAND_EXECUTED);
-					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + "&local=" + local);					
+					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);					
 				} else {
 					response.sendRedirect(JspPageName.ERROR_PAGE);
 				}

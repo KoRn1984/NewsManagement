@@ -25,6 +25,7 @@ public class DoEditNews implements Command {
 	
 	private final NewsServiceImpl newsService = new NewsServiceImpl();
 	private static final Logger log = LogManager.getRootLogger();
+	private static final String ERROR_EDIT_NEWS_MESSAGE = "&EditNewsError=Incorrect data entered!";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,8 +35,7 @@ public class DoEditNews implements Command {
 		Integer idNews = Integer.parseInt((String)request.getSession().getAttribute(AttributsName.NEWS_ID));
 		String local = request.getParameter(AttributsName.LOCAL);
 		HttpSession getSession = request.getSession(true);
-		getSession.setAttribute(AttributsName.LOCAL, local);
-				
+						
 		try {			
 			var news = new News.Builder()
 					.withId(idNews)
@@ -48,14 +48,14 @@ public class DoEditNews implements Command {
 			if (newsService.update(news)) {				
 				getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 				getSession.setAttribute(AttributsName.EDIT_NEWS, AttributsName.COMMAND_EXECUTED);
-				getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.EDIT_NEWS_PAGE + "&local=" + local);
-				response.sendRedirect(PageUrl.NEWS_LIST_PAGE + "&local=" + local);		
+				getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.EDIT_NEWS_PAGE + PageUrl.AMPERSAND_LOCAL + local);
+				response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);		
 			} else {
 				response.sendRedirect(JspPageName.ERROR_PAGE);
 			}
 		} catch (ServiceException e) {
 			log.error(e);
-			response.sendRedirect(JspPageName.INDEX_PAGE);
+			response.sendRedirect(PageUrl.EDIT_NEWS_PAGE + idNews + ERROR_EDIT_NEWS_MESSAGE + PageUrl.AMPERSAND_LOCAL + local);
 		}		
 	}
 }
