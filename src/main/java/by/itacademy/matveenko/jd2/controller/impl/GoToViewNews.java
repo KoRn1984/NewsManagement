@@ -33,12 +33,12 @@ public class GoToViewNews implements Command {
 			getSession.setAttribute(AttributsName.LOCAL, local);
 			String id = request.getParameter(NewsParameterName.JSP_ID_NEWS);
 			news = newsService.findById(Integer.parseInt(id));
-			StringBuilder urlBuilder = new StringBuilder(PageUrl.VIEW_NEWS);
-			urlBuilder.append(id);			
+			StringBuilder urlForRedirect = new StringBuilder(PageUrl.VIEW_NEWS);
+			urlForRedirect.append(id);			
 			if (news == null) {
 				response.sendRedirect(JspPageName.ERROR_PAGE);
 			} else {
-				getSession.setAttribute(AttributsName.PAGE_URL, urlBuilder);
+				getSession.setAttribute(AttributsName.PAGE_URL, urlForRedirect.toString());
 				request.setAttribute(AttributsName.NEWS, news);		
 				request.setAttribute(AttributsName.PRESENTATION, AttributsName.VIEW_NEWS);
 				request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);

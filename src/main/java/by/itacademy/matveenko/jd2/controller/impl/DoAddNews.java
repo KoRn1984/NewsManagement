@@ -46,7 +46,7 @@ public class DoAddNews implements Command {
 				if (newsService.save(news)) {					
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 					getSession.setAttribute(AttributsName.ADD_NEWS, AttributsName.COMMAND_EXECUTED);
-					getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE + PageUrl.AMPERSAND_LOCAL + local);
+					getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE);
 					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);
 				} else {
 					response.sendRedirect(JspPageName.ERROR_PAGE);

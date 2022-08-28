@@ -52,12 +52,15 @@ public class DoSignIn implements Command {
 				getSession.removeAttribute(AttributsName.REGISTER_USER);
 				getSession.setAttribute(AttributsName.ROLE, UserRole.GUEST);
 				request.setAttribute(AttributsName.NEWS, latestNews);
+				getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.BASE_PAGE + ERROR_SIGN_IN_MESSAGE);
 				response.sendRedirect(PageUrl.BASE_PAGE + ERROR_SIGN_IN_MESSAGE + PageUrl.AMPERSAND_LOCAL + local);
 			} else if (!user.getRole().equals(UserRole.GUEST)) {
 				getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 				getSession.setAttribute(AttributsName.ROLE, user.getRole().getName());
 				getSession.setAttribute(AttributsName.USER, user);
 				getSession.removeAttribute(AttributsName.REGISTER_USER);
+				request.setAttribute(AttributsName.NEWS, latestNews);
+				getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.NEWS_LIST_PAGE);				
 				response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);
 			} 
 		} catch (ServiceException e) {

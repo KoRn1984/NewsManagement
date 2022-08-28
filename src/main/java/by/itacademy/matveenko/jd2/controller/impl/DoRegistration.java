@@ -51,6 +51,7 @@ public class DoRegistration implements Command {
 					getSession.setAttribute(AttributsName.ROLE, user.getRole().getName());
 					getSession.setAttribute(AttributsName.USER, user);
 					getSession.setAttribute(AttributsName.REGISTER_USER, ConnectorStatus.REGISTERED);
+					getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.NEWS_LIST_PAGE);
 					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);					
 				}
 				else {					
@@ -62,5 +63,5 @@ public class DoRegistration implements Command {
 				log.error(e);			
 				response.sendRedirect(PageUrl.REGISTRATION_PAGE + ERROR_REGISTRATION_MESSAGE + PageUrl.AMPERSAND_LOCAL + local);
 		    } 
-		}
+	}
 }

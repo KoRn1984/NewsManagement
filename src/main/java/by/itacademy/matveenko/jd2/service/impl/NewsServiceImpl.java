@@ -44,7 +44,12 @@ public class NewsServiceImpl implements INewsService{
 	public boolean save(News news) throws ServiceException {
 		try {
 			NewsDataValidation.ValidBuilder valid = new NewsDataValidation.ValidBuilder();			
-			NewsDataValidation validNewsData = valid.titleValid(news.getTitle()).briefValid(news.getBrief()).contentValid(news.getContent()).authorValid(news.getAuthor()).dateValid(news.getDate()).build();
+			NewsDataValidation validNewsData = valid.titleValid(news.getTitle())
+					.briefValid(news.getBrief())
+					.contentValid(news.getContent())
+					.authorValid(news.getAuthor())
+					.dateValid(news.getDate())
+					.build();
 			if(!validNewsData.getDataValid().isEmpty()) {
 				throw new ServiceException("The entered news data is not valid!");
 			} else if (newsDao.addNews(news) == 0) {
@@ -60,7 +65,12 @@ public class NewsServiceImpl implements INewsService{
 	public boolean update(News news) throws ServiceException {
 		try {
 			NewsDataValidation.ValidBuilder valid = new NewsDataValidation.ValidBuilder();			
-			NewsDataValidation validNewsData = valid.titleValid(news.getTitle()).briefValid(news.getBrief()).contentValid(news.getContent()).authorValid(news.getAuthor()).dateValid(news.getDate()).build();
+			NewsDataValidation validNewsData = valid.titleValid(news.getTitle())
+					.briefValid(news.getBrief())
+					.contentValid(news.getContent())
+					.authorValid(news.getAuthor())
+					.dateValid(news.getDate())
+					.build();
 			if(!validNewsData.getDataValid().isEmpty()) {
 				throw new ServiceException("The entered news data is not valid!");
 			} else if (!(newsDao.updateNews(news))) {

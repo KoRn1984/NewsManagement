@@ -41,7 +41,9 @@ public class GoToEditNewsPage implements Command {
 				getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 				getSession.setAttribute(AttributsName.NEWS_COMMANDS_NAME, AttributsName.EDIT_NEWS);
 				getSession.setAttribute(AttributsName.NEWS_ID, request.getParameter(NewsParameterName.JSP_ID_NEWS));
-				request.getSession(true).setAttribute(AttributsName.PAGE_URL, PageUrl.EDIT_NEWS_PAGE + id);
+				StringBuilder urlForRedirect = new StringBuilder(PageUrl.EDIT_NEWS_PAGE);
+				urlForRedirect.append(id);	
+				getSession.setAttribute(AttributsName.PAGE_URL, urlForRedirect.toString());
 				request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 				getSession.removeAttribute(AttributsName.NEWS_COMMANDS_NAME);
 			}		
@@ -49,5 +51,5 @@ public class GoToEditNewsPage implements Command {
 			log.error(e);
 			response.sendRedirect(JspPageName.ERROR_PAGE);
 			}
-		}
 	}
+}
