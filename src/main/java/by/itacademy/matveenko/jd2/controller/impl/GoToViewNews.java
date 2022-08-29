@@ -34,7 +34,7 @@ public class GoToViewNews implements Command {
 			String id = request.getParameter(NewsParameterName.JSP_ID_NEWS);
 			news = newsService.findById(Integer.parseInt(id));
 			StringBuilder urlForRedirect = new StringBuilder(PageUrl.VIEW_NEWS);
-			urlForRedirect.append(id);			
+			urlForRedirect.append(id);		
 			if (news == null) {
 				response.sendRedirect(JspPageName.ERROR_PAGE);
 			} else {

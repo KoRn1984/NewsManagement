@@ -46,14 +46,20 @@ public class DoAddNews implements Command {
 				if (newsService.save(news)) {					
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);
 					getSession.setAttribute(AttributsName.ADD_NEWS, AttributsName.COMMAND_EXECUTED);
-					getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE);
-					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);
+					StringBuilder urlForRedirect = new StringBuilder(PageUrl.NEWS_LIST_PAGE);
+					urlForRedirect.append(PageUrl.AMPERSAND_LOCAL);
+					urlForRedirect.append(local);
+					response.sendRedirect(urlForRedirect.toString());
 				} else {
 					response.sendRedirect(JspPageName.ERROR_PAGE);
 				}
 			} catch (ServiceException e) {
 				log.error(e);
-				response.sendRedirect(PageUrl.ADD_NEWS_PAGE + ERROR_ADD_NEWS_MESSAGE + PageUrl.AMPERSAND_LOCAL + local);	
+				StringBuilder urlForRedirect = new StringBuilder(PageUrl.ADD_NEWS_PAGE);
+				urlForRedirect.append(ERROR_ADD_NEWS_MESSAGE);
+				urlForRedirect.append(PageUrl.AMPERSAND_LOCAL);
+				urlForRedirect.append(local);
+				response.sendRedirect(urlForRedirect.toString());				
 			}
-		}
 	}
+}

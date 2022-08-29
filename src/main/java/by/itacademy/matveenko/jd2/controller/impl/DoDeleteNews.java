@@ -33,7 +33,10 @@ public class DoDeleteNews implements Command {
 				if (newsService.deleteNewsesByIds(idNewses)) {			
 					getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);					
 					getSession.setAttribute(AttributsName.DELETE_NEWS, AttributsName.COMMAND_EXECUTED);
-					response.sendRedirect(PageUrl.NEWS_LIST_PAGE + PageUrl.AMPERSAND_LOCAL + local);					
+					StringBuilder urlForRedirect = new StringBuilder(PageUrl.NEWS_LIST_PAGE);
+					urlForRedirect.append(PageUrl.AMPERSAND_LOCAL);
+					urlForRedirect.append(local);
+					response.sendRedirect(urlForRedirect.toString());				
 				} else {
 					response.sendRedirect(JspPageName.ERROR_PAGE);
 				}

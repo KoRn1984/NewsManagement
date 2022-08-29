@@ -18,6 +18,9 @@ public class DoSignOut implements Command {
 		String local = request.getParameter(AttributsName.LOCAL);
 		HttpSession getSession = request.getSession(true);
 		getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.NOT_ACTIVE);
-		response.sendRedirect(PageUrl.BASE_PAGE + PageUrl.AMPERSAND_LOCAL + local);
+		StringBuilder urlForRedirect = new StringBuilder(PageUrl.BASE_PAGE);
+		urlForRedirect.append(PageUrl.AMPERSAND_LOCAL);
+		urlForRedirect.append(local);
+		response.sendRedirect(urlForRedirect.toString());		
 	}
 }
