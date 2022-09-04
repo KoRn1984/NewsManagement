@@ -16,10 +16,10 @@ public class GoToAddNewsPage implements Command {
 		
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession getSession = request.getSession(true);
-		getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE);
+		HttpSession getSession = request.getSession(true);		
 		getSession.setAttribute(AttributsName.USER_STATUS, ConnectorStatus.ACTIVE);		
-		getSession.setAttribute(AttributsName.NEWS_COMMANDS_NAME, AttributsName.ADD_NEWS);		
+		getSession.setAttribute(AttributsName.NEWS_COMMANDS_NAME, AttributsName.ADD_NEWS);
+		getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.ADD_NEWS_PAGE);
 		request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 		getSession.removeAttribute(AttributsName.NEWS_COMMANDS_NAME);	
 	}

@@ -32,12 +32,11 @@ public class GoToNewsList implements Command {
 		Integer pageSize = 5;
 		
 		try {			
-			getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.NEWS_LIST_PAGE);
 			newsList = newsService.newsList(pageNumber, pageSize);
 			request.setAttribute(AttributsName.NEWS, newsList);
-			request.setAttribute(AttributsName.PRESENTATION, AttributsName.NEWS_LIST);			
-			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
-			request.setAttribute(AttributsName.REGISTER_USER, null);
+			request.setAttribute(AttributsName.PRESENTATION, AttributsName.NEWS_LIST);
+			getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.NEWS_LIST_PAGE);
+			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);			
 		} catch (ServiceException e) {
 			log.error(e);
 			response.sendRedirect(JspPageName.ERROR_PAGE);

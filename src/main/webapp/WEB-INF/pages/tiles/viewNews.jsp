@@ -12,7 +12,7 @@
 <fmt:message bundle="${loc}" key="local.loc.name.content" var="content" />
 <fmt:message bundle="${loc}" key="local.loc.name.edit" var="edit" />
 <fmt:message bundle="${loc}" key="local.loc.name.delete" var="delete" />
-<fmt:message bundle="${loc}" key="local.loc.name.cancel" var="cancel" />
+<fmt:message bundle="${loc}" key="local.loc.name.back" var="back" />
 
 <div class="body-title">
 	<a href="controller?command=go_to_news_list">${newses} >> </a>${news_view}
@@ -75,6 +75,6 @@
 <div class="cancel-button">
 		<form action="controller" method="post">
 		     <input type="hidden" name="command" value="go_to_news_list" />		     
-		     <input type="submit" value="${cancel}" />
+		     <input type="submit" value="${back}" />
 		</form>
 </div>

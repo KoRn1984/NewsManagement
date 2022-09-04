@@ -32,9 +32,9 @@ public class GoToBasePage implements Command{
 		List<News> latestNews;
 				
 		try {			
-			getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.BASE_PAGE);
 			latestNews = newsService.latestList(COUNT_NEWS);			
-			request.setAttribute(AttributsName.NEWS, latestNews);			
+			request.setAttribute(AttributsName.NEWS, latestNews);
+			getSession.setAttribute(AttributsName.PAGE_URL, PageUrl.BASE_PAGE);
 		} catch (ServiceException e) {			
 			log.error(e);
 			response.sendRedirect(JspPageName.ERROR_PAGE);

@@ -37,9 +37,9 @@ public class GoToViewNews implements Command {
 			if (news == null) {
 				response.sendRedirect(JspPageName.ERROR_PAGE);
 			} else {
-				getSession.setAttribute(AttributsName.PAGE_URL, urlForRedirect.toString());
 				request.setAttribute(AttributsName.NEWS, news);		
 				request.setAttribute(AttributsName.PRESENTATION, AttributsName.VIEW_NEWS);
+				getSession.setAttribute(AttributsName.PAGE_URL, urlForRedirect.toString());
 				request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 			}					
 		} catch (ServiceException e) {		
