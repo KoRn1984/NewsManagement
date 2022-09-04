@@ -40,8 +40,7 @@
 				<font color="red">
 					<c:out value="${registration_error}" />
 				</font> 
-			</c:if><br />
-			<input type="hidden" name="local" value="${local}" />
+			</c:if><br />			
 			<input class="button" type="submit" value="${register}" /><br/>
 		</form>
 </fieldset>
@@ -50,8 +49,7 @@
 <br /><br />
 <div class="cancel-button">
 		<form action="controller" method="post">
-		     <input type="hidden" name="command" value="go_to_base_page" />
-		     <input type="hidden" name="local" value="${local}" />
+		     <input type="hidden" name="command" value="go_to_base_page" />		     
 		     <input type="submit" value="${cancel}" />
 		</form>
 </div>		

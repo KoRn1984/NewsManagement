@@ -13,7 +13,6 @@
 <title>Error</title>
 </head>
 <body>
-<input type="hidden" name="local" value="${local}" />
 <h1>${error}!</h1>
 </body>
 </html>

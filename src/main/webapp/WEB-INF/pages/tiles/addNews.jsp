@@ -34,7 +34,7 @@
 </head>
 <body>
 <div class="body-title">
-	<a href="controller?command=go_to_news_list&local=${local}">${newses} >> </a>${add_news}
+	<a href="controller?command=go_to_news_list">${newses} >> </a>${add_news}
 </div>
 <div class="add-table-margin">
 	<table class="news_text_format">
@@ -52,8 +52,7 @@
 			<font color="red">
 				<c:out value="${add_news_error}" />
 			</font> 
-		</c:if><br />			 
-		<input type="hidden" name="local" value="${local}" />				
+		</c:if><br />					
 		<input type="submit" value="${save}" />		
 </fieldset>	
 </form>
@@ -62,8 +61,7 @@
 <br /><br />
 <div class="cancel-button">
 		<form action="controller" method="post">
-		    <input type="hidden" name="command" value="go_to_news_list" />
-		    <input type="hidden" name="local" value="${local}" />
+		    <input type="hidden" name="command" value="go_to_news_list" />		    
 		    <input type="submit" value="${cancel}" />
 		</form>
 </div>

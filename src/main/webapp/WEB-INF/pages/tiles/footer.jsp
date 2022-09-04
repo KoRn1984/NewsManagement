@@ -13,7 +13,6 @@
 <title>Footer</title>
 </head>
 <body>
-<input type="hidden" name="local" value="${local}" />    
 <center>${copyright}.</center>
 </body>
 </html>

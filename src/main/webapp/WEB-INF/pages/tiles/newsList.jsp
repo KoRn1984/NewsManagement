@@ -16,7 +16,7 @@
 <fmt:message bundle="${loc}" key="local.loc.name.deleteMessage" var="delete_message" />
 
 <div class="body-title">
-	<a href="controller?command=go_to_news_list&local=${local}">${newses} >> </a>${news_list}
+	<a href="controller?command=go_to_news_list">${newses} >> </a>${news_list}
 </div>
 <form action="controller" method="post">
     <c:if test="${sessionScope.register_user eq 'not_registered'}">
@@ -52,9 +52,9 @@
 				<div class="news-link-to-wrapper">
 					<div class="link-position">
 						<c:if test="${sessionScope.role eq 'admin'}">
-						      <a href="controller?command=go_to_edit_news_page&id=${news.id}&local=${local}">${edit}</a> 
+						      <a href="controller?command=go_to_edit_news_page&id=${news.id}">${edit}</a>
 						</c:if>&nbsp;&nbsp;				
-						<a href="controller?command=go_to_view_news&id=${news.id}&local=${local}">${view}</a>   					    
+						      <a href="controller?command=go_to_view_news&id=${news.id}">${view}</a>
    					    <c:if test="${sessionScope.role eq 'admin'}">   					    
    					         <input type="checkbox" name="id" value="${news.id}" />
    					         <input type="hidden" name="command" value="do_delete_news" />
@@ -68,8 +68,7 @@
 	<logic:notEmpty name="newsForm" property="newsList">
 		<div class="delete-button-position">
 			<html:submit>
-				<bean:message key="locale.newslink.deletebutton" />
-				<input type="hidden" name="local" value="${local}" />
+				<bean:message key="locale.newslink.deletebutton" />				
 				<input type="submit" value="${delete}" />
 			</html:submit>		                
 		</div>

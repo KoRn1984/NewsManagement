@@ -26,8 +26,7 @@
 		<c:if test="${not (sessionScope.user_status eq 'active')}">
 			<div align="right">
 				<form action="controller" method="post">
-					<input type="hidden" name="command" value="do_sign_in" />
-					<input type="hidden" name="local" value="${local}" />
+					<input type="hidden" name="command" value="do_sign_in" />					
 					${enter_login}:<input type="text" name="login" value="" required pattern="^[A-Za-z]([.A-Za-z0-9-]{1,18})([A-Za-z0-9])$"/><br />
 					${enter_password}:<input type="password" name="password" value="" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\w\s]).{6,}"/><br />
 					<c:if test="${not (param.AuthenticationError eq null)}">					
@@ -36,8 +35,7 @@
 						</font> 
 					</c:if>
 					<input type="hidden" name="command" value="do_registration" />
-					<a href="controller?command=go_to_registration_page&local=${local}">${registration}</a>
-					<input type="hidden" name="local" value="${local}" />			
+					<a href="controller?command=go_to_registration_page">${registration}</a>							
 					<input type="submit" value="${sign_in}" /><br />
 				</form>
 			</div>
@@ -46,8 +44,7 @@
 			<div align="right">
 			<font color="blue">${user.userName}</font>&nbsp;&nbsp;<font color="blue">${user.userSurname}</font>
 				<form action="controller" method="post">				    
-					<input type="hidden" name="command" value="do_sign_out" />
-					<input type="hidden" name="local" value="${local}" />
+					<input type="hidden" name="command" value="do_sign_out" />					
 					<input type="submit" value="${sign_out}" /><br />
 				</form>
 			</div>
