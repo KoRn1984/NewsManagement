@@ -10,5 +10,5 @@ public interface IUserDao {
 	User findUserByLoginAndPassword(String login, String hashPassword) throws DaoException;
 	User findUserByLogin(String login) throws DaoException;
 	boolean saveUser(User user) throws DaoException, ServiceException;
-	User findById(Integer id) throws SQLException, ConnectionPoolException, DaoException;
+	User findById(Integer id) throws SQLException, ConnectionPoolException, DaoException;	
 }

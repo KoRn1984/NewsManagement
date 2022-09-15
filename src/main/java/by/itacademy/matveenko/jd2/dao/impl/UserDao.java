@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import by.itacademy.matveenko.jd2.bean.User;
-import by.itacademy.matveenko.jd2.bean.UserRole;
-import by.itacademy.matveenko.jd2.controller.UserParameterName;
 import by.itacademy.matveenko.jd2.dao.DaoException;
 import by.itacademy.matveenko.jd2.dao.IUserDao;
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPool;
 import by.itacademy.matveenko.jd2.dao.connectionpool.ConnectionPoolException;
+import by.itacademy.matveenko.jd2.util.UserParameterName;
+import by.itacademy.matveenko.jd2.util.UserRole;
 
 public class UserDao implements IUserDao {	
 	
@@ -89,8 +89,8 @@ public class UserDao implements IUserDao {
             throw new DaoException(e);
         }
         return true;
-    }
-    
+    }    
+      
     private static final String SELECT_DATA_FIND_BY_ID = "SELECT users.id AS id, login, password, name, surname, email, roles.role AS role FROM users JOIN roles ON roles.id = users.role WHERE users.id = ?";
     @Override
     public User findById(Integer id) throws SQLException, DaoException {    	

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.google.common.base.Objects;
 import by.itacademy.matveenko.jd2.bean.User;
+import by.itacademy.matveenko.jd2.util.UserRole;
 
 
 public class User implements Serializable {

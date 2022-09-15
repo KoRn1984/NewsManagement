@@ -4,17 +4,18 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import by.itacademy.matveenko.jd2.bean.UserRole;
-import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
+
 import by.itacademy.matveenko.jd2.bean.User;
 import by.itacademy.matveenko.jd2.service.ServiceException;
-import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
-import by.itacademy.matveenko.jd2.controller.JspPageName;
-import by.itacademy.matveenko.jd2.controller.PageUrl;
-import by.itacademy.matveenko.jd2.controller.UserParameterName;
 import by.itacademy.matveenko.jd2.service.IUserService;
 import by.itacademy.matveenko.jd2.service.ServiceProvider;
+import by.itacademy.matveenko.jd2.util.AttributsName;
+import by.itacademy.matveenko.jd2.util.ConnectorStatus;
+import by.itacademy.matveenko.jd2.util.JspPageName;
+import by.itacademy.matveenko.jd2.util.PageUrl;
+import by.itacademy.matveenko.jd2.util.UserParameterName;
+import by.itacademy.matveenko.jd2.util.UserRole;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +24,7 @@ import jakarta.servlet.http.HttpSession;
 public class DoRegistration implements Command {
 	
 	private final IUserService service = ServiceProvider.getInstance().getUserService();
-	private static final Logger log = LogManager.getRootLogger();
+	private static final Logger log = LogManager.getLogger(DoRegistration.class);
 	private static final String ERROR_REGISTRATION_MESSAGE = "&RegistrationError";
 		
 		@Override

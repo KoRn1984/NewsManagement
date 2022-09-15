@@ -83,12 +83,37 @@ public class NewsServiceImpl implements INewsService{
 	}
 	
 	@Override
-	public boolean deleteNewsesByIds(String[] idNewses) throws ServiceException {		
+	public boolean unpublishNewsById(String[] idNews) throws ServiceException {		
 		try {
-			if (!(newsDao.deleteNewses(idNewses))) {							
+			if (!(newsDao.unpublishNews(idNews))) {
 				return false;
 			}
 			return true;
+		} catch (NewsDaoException e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public boolean deleteNewsById(String[] idNews) throws ServiceException {		
+		try {
+			if (!(newsDao.deleteNews(idNews))) {							
+				return false;
+			}
+			return true;
+		} catch (NewsDaoException e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	@Override
+	public int countPage(int countNewsPage) throws ServiceException {
+		try {
+			int countNews = newsDao.countNews();
+			if (countNews == 0) {
+				return 0;
+			}
+			return (int) Math.ceil(countNews / (double) countNewsPage);
 		} catch (NewsDaoException e) {
 			throw new ServiceException(e);
 		}

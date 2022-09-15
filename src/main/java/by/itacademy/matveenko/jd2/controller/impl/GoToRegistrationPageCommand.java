@@ -2,11 +2,11 @@ package by.itacademy.matveenko.jd2.controller.impl;
 
 import java.io.IOException;
 
-import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
-import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
-import by.itacademy.matveenko.jd2.controller.JspPageName;
-import by.itacademy.matveenko.jd2.controller.PageUrl;
+import by.itacademy.matveenko.jd2.util.AttributsName;
+import by.itacademy.matveenko.jd2.util.ConnectorStatus;
+import by.itacademy.matveenko.jd2.util.JspPageName;
+import by.itacademy.matveenko.jd2.util.PageUrl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

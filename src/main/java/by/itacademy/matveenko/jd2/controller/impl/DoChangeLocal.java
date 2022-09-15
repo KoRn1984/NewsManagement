@@ -5,16 +5,16 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
-import by.itacademy.matveenko.jd2.controller.PageUrl;
+import by.itacademy.matveenko.jd2.util.AttributsName;
+import by.itacademy.matveenko.jd2.util.PageUrl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class DoChangeLocal implements Command {
-	private static final Logger log = LogManager.getRootLogger();
+	private static final Logger log = LogManager.getLogger(DoChangeLocal.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

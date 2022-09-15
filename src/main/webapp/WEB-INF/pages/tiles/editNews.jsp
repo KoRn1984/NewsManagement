@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.local}" />
@@ -37,7 +37,7 @@
 </div>
 <div class="add-table-margin">
 <table class="news_text_format">
-<fieldset><legend><b><center>${enter_text}:</center></b></legend>
+<legend><b><div style="text-align:center;">${enter_text}:</div></b></legend><br />
 <form action="controller" method="post">
 		<input type="hidden" name="command" value="do_edit_news" />			              						
 		<label>${title}:<br />
@@ -52,17 +52,15 @@
 				<c:out value="${edit_news_error}" />
 			</font>
 		</c:if><br />						
-		<input type="submit" value="${save}" />
+		<button type="submit" class="btn btn-info" value="${save}">${save}</button>
 </form>
-</fieldset>
 </table>
 </div>
-<br /><br />
 <div class="cancel-button">
 		<form action="controller" method="post">
 		     <input type="hidden" name="command" value="go_to_view_news" />
 		     <input type="hidden" name="id" value="${news.id}" />		          
-		     <input type="submit" value="${cancel}" />
+		     <button type="submit" class="btn btn-dark" value="${cancel}">${cancel}</button>
 		</form>		
 </div>
 </body>

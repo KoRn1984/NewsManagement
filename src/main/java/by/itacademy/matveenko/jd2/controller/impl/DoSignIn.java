@@ -8,17 +8,17 @@ import org.apache.logging.log4j.Logger;
 
 import by.itacademy.matveenko.jd2.service.INewsService;
 import by.itacademy.matveenko.jd2.service.IUserService;
-import by.itacademy.matveenko.jd2.bean.ConnectorStatus;
 import by.itacademy.matveenko.jd2.bean.News;
 import by.itacademy.matveenko.jd2.bean.User;
-import by.itacademy.matveenko.jd2.bean.UserRole;
-import by.itacademy.matveenko.jd2.controller.AttributsName;
 import by.itacademy.matveenko.jd2.controller.Command;
-import by.itacademy.matveenko.jd2.controller.JspPageName;
-import by.itacademy.matveenko.jd2.controller.PageUrl;
-import by.itacademy.matveenko.jd2.controller.UserParameterName;
 import by.itacademy.matveenko.jd2.service.ServiceException;
 import by.itacademy.matveenko.jd2.service.ServiceProvider;
+import by.itacademy.matveenko.jd2.util.AttributsName;
+import by.itacademy.matveenko.jd2.util.ConnectorStatus;
+import by.itacademy.matveenko.jd2.util.JspPageName;
+import by.itacademy.matveenko.jd2.util.PageUrl;
+import by.itacademy.matveenko.jd2.util.UserParameterName;
+import by.itacademy.matveenko.jd2.util.UserRole;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +28,7 @@ public class DoSignIn implements Command {
 
 	private final IUserService service = ServiceProvider.getInstance().getUserService();
 	private final INewsService newsService = ServiceProvider.getInstance().getNewsService();
-	private static final Logger log = LogManager.getRootLogger();
+	private static final Logger log = LogManager.getLogger(DoSignIn.class);
 	private static final String AUTHENTICATION_ERROR = "&AuthenticationError";
 	private static final int COUNT_NEWS = 5;
 	

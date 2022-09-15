@@ -2,8 +2,6 @@ package by.itacademy.matveenko.jd2.service.impl;
 
 import by.itacademy.matveenko.jd2.dao.IUserDao;
 import by.itacademy.matveenko.jd2.service.IUserService;
-import by.itacademy.matveenko.jd2.util.validation.UserDataValidation;
-import by.itacademy.matveenko.jd2.util.validation.ValidationProvider;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -11,6 +9,8 @@ import by.itacademy.matveenko.jd2.bean.User;
 import by.itacademy.matveenko.jd2.dao.DaoException;
 import by.itacademy.matveenko.jd2.dao.DaoProvider;
 import by.itacademy.matveenko.jd2.service.ServiceException;
+import by.itacademy.matveenko.jd2.util.validation.UserDataValidation;
+import by.itacademy.matveenko.jd2.util.validation.ValidationProvider;
 
 public class UserServiceImpl implements IUserService{	
 	private final IUserDao userDao = DaoProvider.getInstance().getUserDao();
